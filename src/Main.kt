@@ -11,22 +11,13 @@ fun minAbsoluteDifference(A: IntArray): Int {
     val totalSum = A.sum()
     println("totalSum: $totalSum")
 
-    val forwardSum = Array(A.size) {
-        0
-    }
-
-    A.forEachIndexed { index, value ->
-        if (index == 0) {
-            forwardSum[index] = value
-        } else {
-            forwardSum[index] = value + forwardSum[index-1]
-        }
-    }
-    println("forwardSum: ${forwardSum.joinToString()}")
-
-    var minDiff = calculateAbsDiff(forwardSum[0], totalSum)
-    for (p in 2 until forwardSum.size) {
-        val absDiff = calculateAbsDiff(forwardSum[p-1], totalSum)
+    //calculate for p=1 -> p-1=0
+    var minDiff = calculateAbsDiff(A[0], totalSum)
+    var sum = A[0]
+    for (p in 2 until A.size) {
+        //partition at point p so ranges:[0,p-1], [p, n-1]
+        sum += A[p-1]
+        val absDiff = calculateAbsDiff(sum, totalSum)
 
         if (absDiff < minDiff) {
             minDiff = absDiff
