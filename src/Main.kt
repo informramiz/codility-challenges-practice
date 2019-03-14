@@ -1,12 +1,14 @@
 fun main() {
-    println("Hello world")
-    val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
+    val A = arrayOf(2, 6, 6)
+    val B = arrayOf(2, 0, 8)
+    val m = 8
+    println("Check if swap makes A.sum() == B.sum(): ${CountingElements.checkIfSwapMakeTotalsEqual(A, B, m)}")
+}
+
+//val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
 //    val minDiff = minAbsoluteDifference(arrayOf(1,1).toIntArray())
 //    val minDiff = minAbsoluteDifference(arrayOf(3, 1, 2, 4, 3).toIntArray())
 //    val minDiff = minAbsoluteDifference(arrayOf(-1000, 1000).toIntArray())
-    println("min Diff: $minDiff")
-}
-
 fun minAbsoluteDifference(A: IntArray): Int {
     val totalSum = A.sum()
     println("totalSum: $totalSum")
@@ -16,7 +18,7 @@ fun minAbsoluteDifference(A: IntArray): Int {
     var sum = A[0]
     for (p in 2 until A.size) {
         //partition at point p so ranges:[0,p-1], [p, n-1]
-        sum += A[p-1]
+        sum += A[p - 1]
         val absDiff = calculateAbsDiff(sum, totalSum)
 
         if (absDiff < minDiff) {
@@ -29,7 +31,8 @@ fun minAbsoluteDifference(A: IntArray): Int {
 
 private fun calculateAbsDiff(
     forwardSum: Int,
-    totalSum: Int): Int {
+    totalSum: Int
+): Int {
 
     val p1Sum = forwardSum
     val p2Sum = totalSum - p1Sum
@@ -72,8 +75,8 @@ fun rotateArray(A: Array<Int>, K: Int) {
     val n = A.size
     for (i in 0 until K) {
         val end = A[n - 1]
-        for (j in n-1 downTo 1) {
-            A[j] = A[j-1]
+        for (j in n - 1 downTo 1) {
+            A[j] = A[j - 1]
         }
         A[0] = end
     }
@@ -81,7 +84,7 @@ fun rotateArray(A: Array<Int>, K: Int) {
 
 fun reverseArray(array: Array<Int>) {
     val n = array.size
-    for (i in 0 until n/2) {
+    for (i in 0 until n / 2) {
         val end = (n - 1) - i
         val start = array[i]
         array[i] = array[end]
