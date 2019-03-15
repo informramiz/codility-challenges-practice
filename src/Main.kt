@@ -1,6 +1,7 @@
 fun main() {
-    val A = arrayOf(1, 3, 1, 4, 2, 3, 5, 4)
-    println(CountingElements.frogRiverOne(5, A))
+    val A = arrayOf(3, 4, 4, 6, 1, 4, 4)
+    val counters = CountingElements.maxCounters(5, A.toIntArray())
+    println(counters.joinToString())
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
