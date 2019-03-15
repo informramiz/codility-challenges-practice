@@ -1,7 +1,7 @@
 fun main() {
-    val A = arrayOf(3, 4, 4, 6, 1, 4, 4)
-    val counters = CountingElements.maxCounters(5, A.toIntArray())
-    println(counters.joinToString())
+    val A = arrayOf(1, 3, 6, 4, 1, 2)
+    val missingInteger = CountingElements.findMissingInteger(A.toIntArray())
+    println(missingInteger)
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
