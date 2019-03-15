@@ -252,50 +252,26 @@ object CountingElements {
     */
     fun maxCounters(N: Int, A: IntArray): IntArray {
         val counters = Array(N) {0}
-        //follow are the total number of reset to max counter value operations
-        val totalMaxOperations = countResetToMaxOperations(N, A)
-        //max counter value reset that needs to be performed on each counter
-        val pendingMaxOperations = Array(N) {totalMaxOperations}
 
         var currentMaxValue = 0
         var lastMaxValue = 0
-        var totalResetsToMaxRemaining = totalMaxOperations
 
         A.forEach { value ->
             if (value in 1..N) { //increase operation
                 val counterIndex = value - 1
-
-                //check if there is a max value reset pending for this counter
-                if (pendingMaxOperations[counterIndex] > totalResetsToMaxRemaining) {
-                    counters[counterIndex] = lastMaxValue
-                    pendingMaxOperations[counterIndex]--
-                }
+                counters[counterIndex] = Math.max(counters[counterIndex], lastMaxValue)
                 counters[counterIndex]++
                 //keep a track of the max counter value
                 currentMaxValue = Math.max(counters[counterIndex], currentMaxValue)
             } else if (value == N + 1) { //reset all counters to max counter value operation
                 lastMaxValue = currentMaxValue
-                totalResetsToMaxRemaining--
             }
-            //println(counters.joinToString())
         }
 
         //check if there are any counters for which reset to max counter operation is still pending
-        counters.forEachIndexed { index, _ ->
-            if (pendingMaxOperations[index] > 0) {
-                counters[index] = lastMaxValue
-            }
+        counters.forEachIndexed { index, value ->
+            counters[index] = Math.max(lastMaxValue, value)
         }
         return counters.toIntArray()
-    }
-
-    private fun countResetToMaxOperations(N: Int, A: IntArray): Int {
-        var count = 0
-        A.forEach { value ->
-            if (value == N + 1) {
-                count++
-            }
-        }
-        return count
     }
 }
