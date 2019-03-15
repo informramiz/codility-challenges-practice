@@ -1,9 +1,6 @@
 fun main() {
-    val A = arrayOf(9, 5, 7, 3, 2, 7, 3, 1, 10, 8)
-//    println(CountingElements.factorial(4))
-//    println(CountingElements.product(A))
-//    println(countOddElement(A.toIntArray()))
-    println(CountingElements.checkIfPermutation(A))
+    val A = arrayOf(1, 3, 1, 4, 2, 3, 5, 4)
+    println(CountingElements.frogRiverOne(5, A))
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
