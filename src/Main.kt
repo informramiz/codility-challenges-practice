@@ -1,8 +1,9 @@
 fun main() {
-    val A = arrayOf(2, 6, 6)
-    val B = arrayOf(2, 0, 8)
-    val m = 8
-    println("Check if swap makes A.sum() == B.sum(): ${CountingElements.checkIfSwapMakeTotalsEqual(A, B, m)}")
+    val A = arrayOf(9, 5, 7, 3, 2, 7, 3, 1, 10, 8)
+//    println(CountingElements.factorial(4))
+//    println(CountingElements.product(A))
+//    println(countOddElement(A.toIntArray()))
+    println(CountingElements.checkIfPermutation(A))
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
