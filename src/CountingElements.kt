@@ -298,7 +298,7 @@ object CountingElements {
      * each element of array A is an integer within the range [−1,000,000..1,000,000].
      */
     fun findMissingInteger(A: IntArray): Int {
-        val counter = Array(1_00_000 + 1) {0}
+        val counter = Array(1_000_000 + 1) {0}
         //required number should be greater than 0, so ignore number 0
         counter[0] = 1
 
