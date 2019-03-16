@@ -98,9 +98,14 @@ object PrefixSums {
             //case p = m, so (m - 2p) => (m - 2m) => -m
             // right position can't be negative so in this case no right steps
             //can be take so we will be k on right side
-            proposedRightPosition = max(proposedRightPosition, k)
+            //you can validate it as
+            //proposedRightPosition = max(proposedRightPosition, k)
+            //or
+            if (proposedRightPosition < k) {
+                proposedRightPosition = k
+            }
 
-            //we don't want to overshoot array length
+            //we don't want to overshoot array length.
             val finalRightPosition = min(proposedRightPosition, A.size - 1)
 
             val sliceSum = calculateSliceSum(prefixSums, leftPosition, finalRightPosition)
@@ -130,8 +135,12 @@ object PrefixSums {
             //can be take so we will be k on left side.
             //so in this
             //case p = m, so k -(m - 2p) => k -(m - 2m) => k - (-m) => k + m => k+m > k so array will overshoot
-            // left position can't overshoot array
-            proposedLeftPosition = min(proposedLeftPosition, k)
+            // left position can't overshoot array. You can validate it as
+            //proposedLeftPosition = min(proposedLeftPosition, k)
+            //or
+            if (proposedLeftPosition > k) {
+                proposedLeftPosition = k
+            }
 
             //just to avoid array overshoot
             val finalLeftPosition = max(proposedLeftPosition, 0)
