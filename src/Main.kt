@@ -1,7 +1,7 @@
 fun main() {
-    val A = arrayOf(1, 3, 6, 4, 1, 2)
-    val missingInteger = CountingElements.findMissingInteger(A.toIntArray())
-    println(missingInteger)
+    val A = arrayOf(2, 3, 7, 5, 1, 3, 9)
+    val maxMushrooms = PrefixSums.pickMaximumMushroomsInGivenMoves(A, 4, 6)
+    println(maxMushrooms)
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
