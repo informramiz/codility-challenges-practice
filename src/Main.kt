@@ -1,7 +1,7 @@
 fun main() {
-    val A = arrayOf(2, 3, 7, 5, 1, 3, 9)
-    val maxMushrooms = PrefixSums.pickMaximumMushroomsInGivenMoves(A, 4, 6)
-    println(maxMushrooms)
+    val A = arrayOf(0, 1, 0, 1, 1)
+    val totalCarPairs = PrefixSums.findTotalCarPairs(A)
+    println(totalCarPairs)
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
