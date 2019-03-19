@@ -1,7 +1,9 @@
 fun main() {
-    val A = arrayOf(0, 1, 0, 1, 1)
-    val totalCarPairs = PrefixSums.findTotalCarPairs(A)
-    println(totalCarPairs)
+    val S = "CAGCCTA"
+    val P = arrayOf(2, 5, 0)
+    val Q = arrayOf(4, 5, 6)
+    val minimumImpactFactors = PrefixSums.findMinimalImpactFactorForDNASequence(S, P, Q)
+    println(minimumImpactFactors.joinToString())
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
