@@ -279,6 +279,10 @@ object PrefixSums {
         return answer
     }
 
+    /**
+     * We will only calculate prefixSum for how many times a nucleotide occurs in given range
+     * so P3 = 2 for nucleotide 'A' means that 'A' occurred 2 times till range [0, 2]
+     */
     private fun prefixSumOfNucleotides(S: String, nucleotides: Set<Char>): Map<Char, Array<Int>> {
         val nucleotidesPrefixSumsMap = HashMap<Char, Array<Int>>(nucleotides.size)
         //initialise sums array for each nucleotide
@@ -291,6 +295,10 @@ object PrefixSums {
         for (i in 1 until prefixSumSize) {
             val currentNucleotide = S[i-1]
             nucleotides.forEach { nucleotide ->
+                //for nucleotide == currentNucleotide
+                // Pi = Pi-1 + 1
+                //for all others
+                //Pi = Pi-1 + 0
                 val prefixSumsForNucleotide = nucleotidesPrefixSumsMap[nucleotide]!!
                 prefixSumsForNucleotide[i] = prefixSumsForNucleotide[i-1] + (currentNucleotide == nucleotide).toInt()
             }
@@ -303,5 +311,4 @@ object PrefixSums {
     private fun Boolean.toInt(): Int {
         return if (this) 1 else 0
     }
-
 }
