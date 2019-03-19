@@ -1,9 +1,7 @@
 fun main() {
-    val S = "CAGCCTA"
-    val P = arrayOf(2, 5, 0)
-    val Q = arrayOf(4, 5, 6)
-    val minimumImpactFactors = PrefixSums.findMinimalImpactFactorForDNASequence(S, P, Q)
-    println(minimumImpactFactors.joinToString())
+    val A = arrayOf(4, 2, 2, 5, 1, 5, 8)
+    val minAvgSliceIndex = PrefixSums.findMinAvgSlice(A)
+    println(minAvgSliceIndex)
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
