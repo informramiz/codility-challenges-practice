@@ -358,23 +358,58 @@ object PrefixSums {
      * each element of array A is an integer within the range [−10,000..10,000].
      */
     fun findMinAvgSlice(A: Array<Int>): Int {
-        val prefixSums = calculatePrefixSums(A)
+        /*
+        For solution check:
+        https://www.martinkysel.com/codility-minavgtwoslice-solution/
+        https://codesays.com/2014/solution-to-min-avg-two-slice-by-codility/
+        For general math proof:
+        https://github.com/daotranminh/playground/blob/master/src/codibility/MinAvgTwoSlice/proof.pdf
 
-        var minAvgSliceStartIndex = 0
-        var endIndex = 0
-        //min A[i] can be -10_000 so
-        var minAvg = 10_000f
+        General idea:
+        1. A slice needs to have at least 2 elements. A slice of size 4 can be divided into
+        2 slices of size 2 each. A slice of size 5 can be divided into 2 slices of size 2 and 3 respectively.
+        so all bigger slices are made up of either 2 or 3 (to handle odd size of bigger slice) sub-slices.
+        For a bigger
 
-        for (p in 0 until A.size-1) {
-            for (q in p+1 until A.size) {
-                val avg = calculateSliceSum(prefixSums, p, q) / ((q - p) + 1f)
-                if (minAvg > avg) {
-                    minAvg = avg
-                    minAvgSliceStartIndex = p
-                    endIndex = q
-                }
+        2 If we say that a bigger slice (size > 3) has minimal avg that means that either its sub-slices have
+        same avg because otherwise the bigger slice can not have minimal avg (because at least one subslice will have
+        less avg than bigger slice). Using this argument we can divide the bigger sub-slice into smaller slices and keep
+        dividing (again using the same argument) until we reach 2 or 3 size sub-slices (a slice can't be smaller than this).
+        So instead of finding a bigger slice with min avg we can just check 2 or 3 size sub-slices and pick the one with
+        min avg (because bigger slice can only be optimal if smaller sub-slices are optimal)
+        */
+        var minAvgSliceIndex = 0
+        var minAvg = 10_000.0 //max possible value of Ai
+        for (i in 0 until A.size - 2) {
+            //check the 2 size sub-slice
+            val twoSizeSliceAvg = (A[i] + A[i+1]) / 2.0
+            if (twoSizeSliceAvg < minAvg) {
+                minAvg = twoSizeSliceAvg
+                minAvgSliceIndex = i
+            }
+
+            val threeSizeSliceAvg = (A[i] + A[i + 1] + A[i + 2]) / 3.0
+            if (threeSizeSliceAvg < minAvg) {
+                minAvg = threeSizeSliceAvg
+                minAvgSliceIndex = i
             }
         }
-        return minAvgSliceStartIndex
+
+        //check the last 2 size slice
+        val lastTwoSizeSliceAvg = (A[A.size - 1] + A[A.size - 2]) / 2.0
+        if (lastTwoSizeSliceAvg < minAvg) {
+            minAvgSliceIndex = A.size - 2
+        }
+
+        return minAvgSliceIndex
+    }
+
+    private fun calculateSliceSumAvg(P: Array<Int>, x: Int, y: Int): Double {
+        val elementsCount = y - x + 1.0
+        //slice needs to have at least 2 elements to be called sliced
+        if (elementsCount < 2) {
+            return 10_0000.0
+        }
+        return calculateSliceSum(P, x, y) / elementsCount
     }
 }
