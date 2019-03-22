@@ -1,7 +1,6 @@
 fun main() {
-    val A = arrayOf(4, 2, 2, 5, 1, 5, 8)
-    val minAvgSliceIndex = PrefixSums.findMinAvgSlice(A)
-    println(minAvgSliceIndex)
+    val divisions = PrefixSums.countDiv(0, 2000000000, 2000000000)
+    println("divisions:$divisions")
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())

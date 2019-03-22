@@ -412,4 +412,35 @@ object PrefixSums {
         }
         return calculateSliceSum(P, x, y) / elementsCount
     }
+
+    fun countDiv(A: Int, B: Int, K: Int): Int {
+        //NOTE: each divisible number has to be in range [A, B] and we can not exceed this range
+        //find the first divisible (by k) number after A (greater than A but less than B to stay in range)
+        var newA = A
+        while (newA % K != 0 && newA < B)
+            newA++
+
+        //find the first divisible (by k) number before B (less than B but greater than A to stay in range)
+        var newB = B
+        while (newB % K != 0 && newB > newA)
+            newB--
+
+        //now that we have final new range ([newA, newB]), verify that both newA and newB are not equal
+        //because in that case there can be only number (newA or newB as both are equal) and we can just check
+        //if that number is divisible or not
+        if (newA == newB) {
+            return (newA % K == 0).toInt()
+        }
+
+        //we can calculate total divisions by using arithmetic sequence with following params
+        //a1 = newA, an = newB, d = K
+        // we know that n-th term (an) can also be calculated using following formula
+        //an = a1 + (n - 1)d
+        //n (total terms in sequence with distance d=K) is what we are interested in finding, put all values
+        //newB = newA + (n - 1)K
+        //re-arrange -> n =  (newB - newA + K) / K
+        //Note: convert calculation to Long to avoid integer overflow otherwise result will be incorrect
+        val result = ((newB - newA + K.toLong()) / K.toDouble()).toInt()
+        return result
+    }
 }
