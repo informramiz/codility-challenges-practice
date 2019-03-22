@@ -432,6 +432,7 @@ object PrefixSums {
             return (newA % K == 0).toInt()
         }
 
+        //Now that both newA and newB are divisible by K (a complete arithmetic sequence)
         //we can calculate total divisions by using arithmetic sequence with following params
         //a1 = newA, an = newB, d = K
         // we know that n-th term (an) can also be calculated using following formula
