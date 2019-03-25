@@ -413,6 +413,7 @@ object PrefixSums {
         return calculateSliceSum(P, x, y) / elementsCount
     }
 
+    //https://app.codility.com/programmers/lessons/5-prefix_sums/count_div/
     fun countDiv(A: Int, B: Int, K: Int): Int {
         //NOTE: each divisible number has to be in range [A, B] and we can not exceed this range
         //find the first divisible (by k) number after A (greater than A but less than B to stay in range)
