@@ -1,3 +1,5 @@
+import problems.PrefixSums
+
 fun main() {
     val divisions = PrefixSums.countDiv(0, 2000000000, 2000000000)
     println("divisions:$divisions")

@@ -1,3 +1,5 @@
+package problems
+
 import extensions.toInt
 import kotlin.math.max
 import kotlin.math.min
