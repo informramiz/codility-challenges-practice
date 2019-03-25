@@ -86,4 +86,24 @@ object Sorting {
             }
         }
     }
+
+    /**
+     * You are given a zero-indexed array A consisting of n > 0 integers; you must return
+     * the number of unique values in array A.
+     */
+    fun countDistinctNumbers(A: Array<Int>): Int {
+        /**
+         * First, sort array A; similar values will then be next to each other.
+         * Finally, just count the number of distinct pairs in adjacent cells.
+         */
+        A.sort()
+        var distinctCount = 0
+        for (i in 0 until A.size-1) {
+            if (A[i] != A[i + 1]) {
+                distinctCount++
+            }
+        }
+
+        return distinctCount
+    }
 }

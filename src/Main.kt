@@ -1,9 +1,9 @@
 import problems.Sorting
 
 fun main() {
-    val array = arrayOf(4, 3, 0, -1, 14)
-    Sorting.mergeSort(array)
-    println(array.joinToString())
+    val array = arrayOf(4, 3, 3, 0, -1, 14)
+    val distinctCount = Sorting.countDistinctNumbers(array)
+    println(distinctCount)
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
