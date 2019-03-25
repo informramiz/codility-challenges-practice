@@ -2,8 +2,8 @@ import problems.PrefixSums
 import problems.Sorting
 
 fun main() {
-    val array = arrayOf(4, 3, -1, 0, 14)
-    val sorted = Sorting.selectionSort(array)
+    val array = arrayOf(4, 3, 0, 14)
+    val sorted = Sorting.countingSort(array, 20)
     println(sorted.joinToString())
 }
 

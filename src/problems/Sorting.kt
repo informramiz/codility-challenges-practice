@@ -25,4 +25,34 @@ object Sorting {
 
         return minIndex
     }
+
+    /**
+     * Counting sort (time = O(n + k)) is only used when we know the
+     * the numbers range [0...k]
+     * NOTE: This program does not support negative numbers, we can add
+     * negative numbers support by either shifting all elements some number so that
+     * the minimum negative number becomes 0 or we can count negative numbers in a separate array
+     */
+    fun countingSort(A: Array<Int>, maximumPossibleNumberInArray: Int): Array<Int> {
+        //make an array for the possible number range
+        val counter = Array(maximumPossibleNumberInArray + 1) {0}
+
+        //count all the numbers in array
+        A.forEach { value ->
+            counter[value]++
+        }
+
+        //for all the possible numbers in range [0...k]
+        //go through each if its count is greater than 0 then add to array A
+        //that many times
+        var indexA = 0
+        counter.forEachIndexed { number, count ->
+            for (i in 0 until count) {
+                A[indexA] = number
+                indexA++
+            }
+        }
+
+        return A
+    }
 }
