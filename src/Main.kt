@@ -1,8 +1,10 @@
 import problems.PrefixSums
+import problems.Sorting
 
 fun main() {
-    val divisions = PrefixSums.countDiv(0, 2000000000, 2000000000)
-    println("divisions:$divisions")
+    val array = arrayOf(4, 3, -1, 0, 14)
+    val sorted = Sorting.selectionSort(array)
+    println(sorted.joinToString())
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
