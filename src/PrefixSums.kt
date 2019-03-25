@@ -1,3 +1,4 @@
+import extensions.toInt
 import kotlin.math.max
 import kotlin.math.min
 
@@ -306,10 +307,6 @@ object PrefixSums {
         }
 
         return nucleotidesPrefixSumsMap
-    }
-
-    private fun Boolean.toInt(): Int {
-        return if (this) 1 else 0
     }
 
     /**
