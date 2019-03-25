@@ -55,4 +55,35 @@ object Sorting {
 
         return A
     }
+
+    fun mergeSort(A: Array<Int>) {
+        _mergeSort(A,0, A.size)
+    }
+
+    private fun _mergeSort(A: Array<Int>, start: Int, end: Int) {
+        if ((end - start) < 2) { //size = 1, so already sorted
+            return
+        }
+
+        val middle = (start + end) / 2
+        _mergeSort(A, start, middle)
+        _mergeSort(A, middle, end)
+        mergeArray(A, start, middle, end)
+    }
+
+    private fun mergeArray(destination: Array<Int>, start: Int, middle: Int, end: Int) {
+        var start1 = start
+        var start2 = middle
+        val copy = destination.copyOf()
+
+        for (i in start until end) {
+            if (start1 < middle && (start2 >= end || copy[start1] <= copy[start2])) {
+                destination[i] = copy[start1]
+                start1++
+            } else {
+                destination[i] = copy[start2]
+                start2++
+            }
+        }
+    }
 }

@@ -1,10 +1,9 @@
-import problems.PrefixSums
 import problems.Sorting
 
 fun main() {
-    val array = arrayOf(4, 3, 0, 14)
-    val sorted = Sorting.countingSort(array, 20)
-    println(sorted.joinToString())
+    val array = arrayOf(4, 3, 0, -1, 14)
+    Sorting.mergeSort(array)
+    println(array.joinToString())
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
