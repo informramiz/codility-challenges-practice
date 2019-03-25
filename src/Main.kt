@@ -1,7 +1,7 @@
 import problems.Sorting
 
 fun main() {
-    val array = arrayOf(4, 3, 3, 0, -1, 14)
+    val array = arrayOf(2, 2, 1, 3, 1, 1)
     val distinctCount = Sorting.countDistinctNumbers(array)
     println(distinctCount)
 }

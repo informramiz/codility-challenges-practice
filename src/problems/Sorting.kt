@@ -96,8 +96,12 @@ object Sorting {
          * First, sort array A; similar values will then be next to each other.
          * Finally, just count the number of distinct pairs in adjacent cells.
          */
+        if (A.isEmpty()) {
+            return 0
+        }
+
         A.sort()
-        var distinctCount = 0
+        var distinctCount = 1
         for (i in 0 until A.size-1) {
             if (A[i] != A[i + 1]) {
                 distinctCount++
