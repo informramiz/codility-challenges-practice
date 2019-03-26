@@ -110,4 +110,26 @@ object Sorting {
 
         return distinctCount
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/6-sorting/max_product_of_three/
+     *
+     * MaxProductOfThree
+     * Maximize A[P] * A[Q] * A[R] for any triplet (P, Q, R).
+     * Note: Array size n is in range [3..100_000] and
+     * A[i] is in range [−1,000..1,000].
+     */
+    fun maxProductOfThree(A: Array<Int>): Int {
+        A.sort()
+        //the biggest product can be achieved by following 2 ways
+        //1. 3 biggest positive numbers
+        //2. 1 biggest positive number, 2 biggest (in terms of absolute value) negative numbers because
+        // multiplying 2 negative numbers will result in positive number
+
+        //first check the the case-1 (biggest positive numbers)
+        val maxProduct = A[A.lastIndex] * A[A.lastIndex-1] * A[A.lastIndex-2]
+        //as array is sorted so biggest (in terms of absolute value) will be on start of array (A[0], A[1])
+        val maxProductWith2NegativeNumbers = A[A.lastIndex] * A[0] * A[1]
+        return Math.max(maxProduct, maxProductWith2NegativeNumbers)
+    }
 }

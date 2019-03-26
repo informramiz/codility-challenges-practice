@@ -1,9 +1,10 @@
 import problems.Sorting
 
 fun main() {
-    val array = arrayOf(2, 2, 1, 3, 1, 1)
-    val distinctCount = Sorting.countDistinctNumbers(array)
-    println(distinctCount)
+    val array = arrayOf(-5, 5, -5, 4)
+//    val array = arrayOf(-3, 1, 2, -2, 5, 6)
+    val maxProductOfThree = Sorting.maxProductOfThree(array)
+    println(maxProductOfThree)
 }
 
 //val minDiff = minAbsoluteDifference(arrayOf(-2, -3, -4, -1).toIntArray())
