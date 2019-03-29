@@ -1,6 +1,8 @@
 package problems
 
+import extensions.negativeCount
 import extensions.swap
+import extensions.toInt
 
 //https://codility.com/media/train/4-Sorting.pdf
 object Sorting {
@@ -131,5 +133,37 @@ object Sorting {
         //as array is sorted so biggest (in terms of absolute value) will be on start of array (A[0], A[1])
         val maxProductWith2NegativeNumbers = A[A.lastIndex] * A[0] * A[1]
         return Math.max(maxProduct, maxProductWith2NegativeNumbers)
+    }
+
+    /**
+     * https://app.codility.com/programmers/lessons/6-sorting/triangle/
+     * Triangle
+     * Determine whether a triangle can be built from a given set of edges.
+     */
+    fun isTriangularTripletPresent(A: Array<Int>): Int {
+        if (A.size < 3) return 0
+
+        A.sort()
+        for (i in 0 until A.size - 2) {
+            //after sorting numbers have to be adjacent to fulfill triplet condition
+            //otherwise there value distance will be greater enough to violate at least 1 condition
+            val p = A[i]
+            val q = A[i + 1]
+            val r = A[i + 2]
+
+            if (isTriangularTriplet(p, q, r)) {
+                return 1
+            }
+        }
+
+        return 0
+    }
+
+    private fun isTriangularTriplet(p: Int, q: Int, r: Int): Boolean {
+        val condition1 = p.toLong() + q > r
+        val condition2 = q.toLong() + r > p
+        val condition3 = r.toLong() + p > q
+
+        return condition1 && condition2 && condition3
     }
 }
