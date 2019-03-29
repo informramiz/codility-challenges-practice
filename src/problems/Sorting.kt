@@ -1,8 +1,6 @@
 package problems
 
-import extensions.negativeCount
 import extensions.swap
-import extensions.toInt
 
 //https://codility.com/media/train/4-Sorting.pdf
 object Sorting {
