@@ -164,4 +164,47 @@ object Sorting {
 
         return condition1 && condition2 && condition3
     }
+
+    /**
+     * Disc Intersections
+     */
+    fun calculateDiscIntersections(A: Array<Int>): Int {
+        val MAX_PAIRS_ALLOWED = 10_000_000L
+        val discsChecked = Array(A.size) {false}
+
+        var count = 0
+        for (j in 0 until A.size) {
+            val checkRange = calculateXRange(j, A[j])
+            discsChecked[j] = true
+            for (k in 0 until A.size) {
+                if (discsChecked[k]) continue
+
+                val srcRange = calculateXRange(k, A[k])
+                if (doesIntersect(srcRange, checkRange) || doesIntersect(checkRange, srcRange)) {
+                    count++
+                }
+            }
+
+            if (count > MAX_PAIRS_ALLOWED) {
+                return -1
+            }
+        }
+
+        return if (count > MAX_PAIRS_ALLOWED) {
+            -1
+        } else {
+            count
+        }
+    }
+
+    private fun calculateXRange(x: Int, r: Int): LongRange {
+        val minX = x - r.toLong()
+        val maxX = x + r.toLong()
+
+        return LongRange(minX, maxX)
+    }
+
+    private fun doesIntersect(srcRange: LongRange, chkRange: LongRange): Boolean {
+        return srcRange.start in chkRange || srcRange.endInclusive in chkRange
+    }
 }
