@@ -176,7 +176,7 @@ object Sorting {
         for (j in 0 until A.size) {
             val checkRange = calculateXRange(j, A[j])
             discsChecked[j] = true
-            for (k in 0 until A.size) {
+            for (k in j+1 until A.size) {
                 if (discsChecked[k]) continue
 
                 val srcRange = calculateXRange(k, A[k])
