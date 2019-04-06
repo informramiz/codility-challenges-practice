@@ -207,4 +207,23 @@ object Sorting {
     private fun doesIntersect(srcRange: LongRange, chkRange: LongRange): Boolean {
         return srcRange.start in chkRange || srcRange.endInclusive in chkRange
     }
+
+    fun binarySearch(array: Array<Int>, key: Int): Int {
+        var start = 0
+        var end = array.size - 1
+        while (start < end) {
+            val mid = Math.ceil((start + end) / 2.0).toInt()
+            val midValue = array[mid]
+            when {
+                midValue == key ->
+                    return mid
+                midValue < key -> // key is in right half part
+                    start = mid
+                else -> //key is in first half of the array
+                    end = mid
+            }
+        }
+
+        return -1
+    }
 }
