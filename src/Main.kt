@@ -8,7 +8,7 @@ fun main() {
 //    println("intersections: $intersections")
 
     val array = arrayOf(1, 2, 3, 5)
-    val key = 5
-    val bisect = Sorting.bisectRight(array, key)
+    val key = 2
+    val bisect = Sorting.bisectRight(array, key, 1)
     println("bisect: $bisect")
 }

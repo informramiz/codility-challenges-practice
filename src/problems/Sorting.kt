@@ -286,4 +286,30 @@ object Sorting {
 
         return -1
     }
+
+    fun bisectRight(array: Array<Int>, key: Int, arrayStart: Int = 0): Int {
+        var start = arrayStart
+        var end = array.size - 1
+        var bisect = start
+
+        while (start <= end) {
+            val mid = Math.ceil((start + end) / 2.0).toInt()
+            val midValue = array[mid]
+            val indexAfterMid = mid + 1
+
+            if (key >= midValue) {
+                bisect = mid
+            }
+
+            if (key >= midValue && (indexAfterMid > end || key < array[indexAfterMid])) {
+                break
+            } else if (key < midValue) {
+                end = mid - 1
+            } else {
+                start = mid + 1
+            }
+        }
+
+        return bisect
+    }
 }
