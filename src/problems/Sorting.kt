@@ -271,16 +271,16 @@ object Sorting {
     fun binarySearch(array: Array<Int>, key: Int): Int {
         var start = 0
         var end = array.size - 1
-        while (start < end) {
+        while (start <= end) {
             val mid = Math.ceil((start + end) / 2.0).toInt()
             val midValue = array[mid]
             when {
                 midValue == key ->
                     return mid
                 midValue < key -> // key is in right half part
-                    start = mid
+                    start = mid + 1
                 else -> //key is in first half of the array
-                    end = mid
+                    end = mid - 1
             }
         }
 
