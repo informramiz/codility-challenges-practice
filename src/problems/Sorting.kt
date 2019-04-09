@@ -181,10 +181,17 @@ object Sorting {
             range.start
         }
 
+        val starts = Array(ranges.size) {index ->
+            ranges[index].start
+        }
+
         var count = 0
         for (i in 0 until ranges.size) {
             val checkRange = ranges[i]
-            val index = findLastIntersectingDicsIndex(ranges, i, checkRange)
+
+            //find the right most disc whose start is less than or equal to end of current disc
+            val index = bisectRight(starts, checkRange.endInclusive, i)
+
             //the number of discs covered by this disc are:
             //count(the next disc/range ... to the last disc/range covered by given disc/range)
             //example: given disc index = 3, last covered (by given disc) disc index = 5
@@ -192,6 +199,7 @@ object Sorting {
             //because there are only 2 discs covered by given disc
             // (immediate next disc with index 4 and last covered disc at index 5)
             val intersections = (index - i)
+
             //because we are only considering discs intersecting/covered by a given disc to the right side
             //and ignore any discs that are intersecting on left (because previous discs have already counted those
             // when checking for their right intersects) so this calculation avoids any duplications
@@ -220,54 +228,6 @@ object Sorting {
         return srcRange.start in chkRange || srcRange.endInclusive in chkRange
     }
 
-    /**
-     * As discs ranges (startX, endX) are sorted by startX all the ranges/discs covered by
-     * given disc/range will have their startX <= checkRange.endX
-     */
-    private fun findLastIntersectingDicsIndex(xPoints: Array<LongRange>, i: Int, checkRange: LongRange): Int {
-        //check boundary cases first
-
-        //if current point is last so no need for checking
-        if (xPoints.lastIndex == i) {
-            return i
-        } else if (xPoints.last().start <= checkRange.endInclusive) {
-            //if given range covers the end point then it covers all the points so
-            //just return last index
-            return xPoints.lastIndex
-        } else if (checkRange.endInclusive < xPoints[i + 1].start) {
-            //given range's endX is less than the startX of next point
-            //so this discs range does not cover/intersect with any other
-            return i
-        }
-
-        //run a binary search
-        var start = i
-        var end = xPoints.size - 1
-        while (start < end) {
-            val mid = Math.ceil((start + end) / 2.0).toInt()
-            val midValue = xPoints[mid]
-            when {
-                //a disc whose range's start is covered by checkRange but it's endX is not so
-                //this is where we should stop searching
-                midValue.start <= checkRange.endInclusive && midValue.endInclusive >= checkRange.endInclusive ->
-                    return mid
-                //mid value's startX is greater than given range's endX so
-                //all the discs covered are within the range (start, mid)
-                //let's search in that range to find the last covered disc
-                midValue.start > checkRange.endInclusive ->
-                    end = mid
-                //mid value's startX is less than given range's endX so
-                //it means there are more discs in the right half of the array
-                //which are covered by given range/disc. Let's search for the last
-                //covered disc/range in array[mid..end]
-                else ->
-                    start = mid
-            }
-        }
-
-        return start
-    }
-
     fun binarySearch(array: Array<Int>, key: Int): Int {
         var start = 0
         var end = array.size - 1
@@ -287,7 +247,7 @@ object Sorting {
         return -1
     }
 
-    fun bisectRight(array: Array<Int>, key: Int, arrayStart: Int = 0): Int {
+    fun bisectRight(array: Array<Long>, key: Long, arrayStart: Int = 0): Int {
         var start = arrayStart
         var end = array.size - 1
         var bisect = start
