@@ -54,4 +54,32 @@ object StacksAndQueues {
 
         return eatenFishesCount
     }
+
+    fun areBracketsBalanced(S: String): Boolean {
+        val stack = Stack<Char>()
+        S.forEach { char ->
+            if (isOpeningBracket(char)) {
+                stack.push(char)
+            } else if (stack.isEmpty() || getCorrespondingOpeningBracket(char) != stack.pop()) {
+                return false
+            }
+        }
+
+        return stack.isEmpty()
+    }
+
+    private fun isOpeningBracket(char: Char): Boolean {
+        return when (char) {
+            '{', '(', '[' -> true
+            else -> false
+        }
+    }
+
+    private fun getCorrespondingOpeningBracket(closingBracket: Char): Char {
+        return when(closingBracket) {
+            ')' -> '('
+            ']' -> '['
+            else -> '{'
+        }
+    }
 }
