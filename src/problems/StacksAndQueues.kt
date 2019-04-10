@@ -1,5 +1,7 @@
 package problems
 
+import java.util.*
+
 object StacksAndQueues {
     /**
      * https://app.codility.com/programmers/lessons/7-stacks_and_queues/fish/
@@ -7,21 +9,21 @@ object StacksAndQueues {
     fun calculateAliveFishes(A: Array<Int>, B: Array<Int>): Int {
         val totalFishes = A.size
         var eatenFishes = 0
-        var currentFish = -1
-        B.forEachIndexed { index, direction ->
-            if (direction == 1) { //downstream
-                if (currentFish == -1) {
-                    currentFish = index
-                } else if (A[currentFish] < A[index]) {
-                    currentFish = index
+        val stack = Stack<Int>()
+
+        for (i in 0 until A.size) {
+            if (B[i] == 1) {
+                //downstream
+                stack.push(i)
+            } else if (stack.isNotEmpty()) {
+                eatenFishes++
+                if (A[stack.peek()] < A[i]) {
+                    stack.pop()
                 }
-            } else { //upstream
-                if (currentFish != -1) {
-                    if (A[currentFish] < A[index]) {
-                        //current fish is eaten by fish with number index
-                        currentFish = -1
-                    }
+
+                while (stack.isNotEmpty() && A[stack.peek()] < A[i]) {
                     eatenFishes++
+                    stack.pop()
                 }
             }
         }
