@@ -82,4 +82,55 @@ object StacksAndQueues {
             else -> '{'
         }
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/7-stacks_and_queues/stone_wall/
+     */
+    fun findMinimumBlocksForWall(H: Array<Int>): Int {
+        var blocksCount = 0
+        val blocksStack = Stack<Int>()
+
+        H.forEach { height ->
+            //NOTE: We ignore the case in which height == stack.peek() because in this case
+            //we can reuse the last blocks to achieve the height so there is no need for new blocks
+
+            when {
+                blocksStack.isEmpty() -> {
+                    //there are no blocks to reuse so we need a new block
+                    blocksStack.push(height)
+                    blocksCount++
+                }
+                height > blocksStack.peek() -> {
+                    //we can reuse the last block and add a new block on top of existing one
+                    //for example:
+                    // Height needed = 7, last block on stack = 5
+                    // we can achieve the height 7 by reusing block of height 5 and add a new block of height 2 (5 + 2 = 7)
+
+                    //the new height is 7 so we will consider it as a full block (because we can reuse all past blocks)
+                    blocksStack.push(height)
+                    blocksCount++
+                }
+                height < blocksStack.peek() -> {
+                    //required height is smaller than the last height we achieved so let's see if we can
+                    //reuse any of the older used blocks
+                    while (blocksStack.isNotEmpty() && height < blocksStack.peek()) {
+                        blocksStack.pop()
+                    }
+
+                    if (height > blocksCount) {
+                        //as there is still some old blocks left on stack that have height
+                        //smaller than the needed height so we can reuse them
+                        blocksStack.push(height)
+                        blocksCount++
+                    } else if (blocksStack.isEmpty()) {
+                        //none of the old blocks were usable so we need a new block
+                        blocksStack.push(height)
+                        blocksCount++
+                    }
+                }
+            }
+        }
+
+        return blocksCount
+    }
 }
