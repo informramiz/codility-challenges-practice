@@ -89,6 +89,7 @@ object StacksAndQueues {
     fun findMinimumBlocksForWall(H: Array<Int>): Int {
         var blocksCount = 0
         val blocksStack = Stack<Int>()
+        blocksStack.ensureCapacity(H.size)
 
         H.forEach { height ->
             //NOTE: We ignore the case in which height == stack.peek() because in this case
@@ -117,13 +118,13 @@ object StacksAndQueues {
                         blocksStack.pop()
                     }
 
-                    if (height > blocksCount) {
-                        //as there is still some old blocks left on stack that have height
-                        //smaller than the needed height so we can reuse them
+                    if (blocksStack.isEmpty()) {
+                        //no blocks to reuse so we need a new block
                         blocksStack.push(height)
                         blocksCount++
-                    } else if (blocksStack.isEmpty()) {
-                        //none of the old blocks were usable so we need a new block
+                    } else if (height > blocksStack.peek()) {
+                        //as there is still some old blocks left on stack that have height
+                        //smaller than the needed height so we can reuse them
                         blocksStack.push(height)
                         blocksCount++
                     }
