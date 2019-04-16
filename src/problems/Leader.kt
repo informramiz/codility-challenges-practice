@@ -103,4 +103,28 @@ object Leader {
             -1
         }
     }
+
+    /**
+     * Array Dominator (basically leader):
+     * Find an index of an array such that its value occurs at more than half of indices in the array.
+     */
+    fun findDominatorIndex(A: Array<Int>): Int {
+        val candidateIndex = findLeaderCandidateIndex(A)
+        //check if we have a valid index
+        if (candidateIndex == -1) {
+            return -1
+        }
+
+        //now let's count leader candidate occurrences to verify if it indeed a leader or not.
+        val candidate = A[candidateIndex]
+        var candidateCount = 0
+        A.forEach { value ->
+            if (value == candidate) {
+                candidateCount++
+            }
+        }
+
+        //remember: a leader has to occur more than n/2 times
+        return if (candidateCount > A.size/2) candidateIndex else -1
+    }
 }
