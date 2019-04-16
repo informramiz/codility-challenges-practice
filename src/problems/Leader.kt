@@ -51,13 +51,34 @@ object Leader {
      * accordingly
      */
     fun findLeaderUsingStack(A: Array<Int>): Int {
+        val candidateIndex = findLeaderCandidateIndex(A)
+        if (candidateIndex == -1) {
+            return -1
+        }
+
+        //now let's count leader candidate occurrences to verify if it indeed a leader or not.
+        val candidate = A[candidateIndex]
+        var candidateCount = 0
+        A.forEach { value ->
+            if (value == candidate) {
+                candidateCount++
+            }
+        }
+
+        //remember: a leader has to occur more than n/2 times
+        return if (candidateCount > A.size / 2) candidate else -1
+    }
+
+    private fun findLeaderCandidateIndex(A: Array<Int>): Int {
         var stackSize = 0
         var stackTop = -1
-        A.forEach { value ->
+        var stackTopIndex = -1
+        A.forEachIndexed { index, value ->
             if (stackSize == 0) {
                 //stack is empty so push the element onto stack
                 stackTop = value
                 stackSize++
+                stackTopIndex = index
             }  else {
                 //there is an element on stack so let's check if current element and last element are different
                 if (stackTop != value) {
@@ -74,22 +95,12 @@ object Leader {
 
         //check if there is no element left on stack, as in that case there is no leader candidate
         //so no need to proceed further
-        if (stackSize == 0) {
+        return if (stackSize > 0) {
+            //element on top of stack, so we have a leader candidate
+            stackTopIndex
+        } else {
             //no element left on stack so no leader candidate
-            return -1
+            -1
         }
-
-        //element on top of stack, so we have a leader candidate
-        val candidate = stackTop
-        //now let's count leader candidate occurrences to verify if it indeed a leader or not.
-        var candidateCount = 0
-        A.forEach { value ->
-            if (value == candidate) {
-                candidateCount++
-            }
-        }
-
-        //remember: a leader has to occur more than n/2 times
-        return if (candidateCount > A.size / 2) candidate else -1
     }
 }
