@@ -1,7 +1,7 @@
-import problems.StacksAndQueues
+import problems.Leader
 
 fun main() {
-    val H = arrayOf(8, 8, 5, 7, 9, 8, 7, 4, 8)
-    val blocksCount = StacksAndQueues.findMinimumBlocksForWall(H)
-    println("blocksCount: $blocksCount")
+    val A = arrayOf(6, 8, 4, 6, 8, 6, 6)
+    val leader = Leader.findLeaderSolution1(A)
+    println("leader: $leader")
 }
