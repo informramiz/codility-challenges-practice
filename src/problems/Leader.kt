@@ -150,7 +150,19 @@ object Leader {
     }
 
     private fun findLeaderCandidatesReverse(A: Array<Int>): Array<Int> {
-        return findLeaderCandidatesForward(A.reversedArray()).reversedArray()
+        //we are going to reuse function to calculate forward leader candidates
+        //by passing it a reversed array and then reverse the returned array
+        val candidates = findLeaderCandidatesForward(A.reversedArray())
+        //reverse the output array as we passed the reversed array to function above
+        candidates.reverse()
+
+        //because candidates array stores index so they are also reversed (index 0 means index n-1),
+        // we need to reverse them back.
+        for (i in 0 until candidates.size) {
+            candidates[i] = candidates.size - i
+        }
+
+        return candidates
     }
 
     private fun findLeaderCandidatesForward(A: Array<Int>): Array<Int> {
