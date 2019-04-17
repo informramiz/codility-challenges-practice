@@ -140,9 +140,10 @@ object Leader {
         val reverseCandidates = findLeaderCandidatesReverse(A)
         for(i in 0 until A.size - 1) {
             val firstCandidateIndex = forwardCandidates[i]
-            val secondCandidateIndex = reverseCandidates[i]
-            if (firstCandidateIndex == secondCandidateIndex && firstCandidateIndex != -1) {
-                count++
+            val secondCandidateIndex = reverseCandidates[i+1]
+            if (firstCandidateIndex != -1 && secondCandidateIndex != -1
+                && A[firstCandidateIndex] == A[secondCandidateIndex]) {
+                    count++
             }
         }
         return count
