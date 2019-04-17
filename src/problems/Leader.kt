@@ -139,10 +139,8 @@ object Leader {
         val forwardCandidates = findLeaderCandidatesForward(A)
         val reverseCandidates = findLeaderCandidatesReverse(A)
         for(i in 0 until A.size - 1) {
-            val firstCandidateIndex = forwardCandidates[i]
-            val secondCandidateIndex = reverseCandidates[i+1]
-            if (firstCandidateIndex != -1 && secondCandidateIndex != -1
-                && A[firstCandidateIndex] == A[secondCandidateIndex]) {
+            if (forwardCandidates[i] != -1_000_000_001
+                && forwardCandidates[i] == reverseCandidates[i+1]) {
                     count++
             }
         }
@@ -155,27 +153,20 @@ object Leader {
         val candidates = findLeaderCandidatesForward(A.reversedArray())
         //reverse the output array as we passed the reversed array to function above
         candidates.reverse()
-
-        //because candidates array stores index so they are also reversed (index 0 means index n-1),
-        // we need to reverse them back.
-        for (i in 0 until candidates.size) {
-            candidates[i] = candidates.size - i
-        }
-
         return candidates
     }
 
     private fun findLeaderCandidatesForward(A: Array<Int>): Array<Int> {
-        val candidates = Array(A.size) {-1}
+        val candidates = Array(A.size) {-1_000_000_001}
         var stackSize = 0
-        var stackTop = -1
-        var stackTopIndex = -1
+        var stackTop = -1_000_000_001
+        //var stackTopIndex = -1
         A.forEachIndexed { index, value ->
             if (stackSize == 0) {
                 //stack is empty so push the element onto stack
                 stackTop = value
                 stackSize++
-                stackTopIndex = index
+                //stackTopIndex = index
             }  else {
                 //there is an element on stack so let's check if current element and last element are different
                 if (stackTop != value) {
@@ -190,7 +181,7 @@ object Leader {
             }
 
             if (stackSize > 0) {
-                candidates[index] = stackTopIndex
+                candidates[index] = stackTop
             }
         }
 
