@@ -130,58 +130,50 @@ object Leader {
      * EquiLeader:
      * Find the index S such that the leaders of the sequences A[0], A[1], ..., A[S]
      * and A[S + 1], A[S + 2], ..., A[N - 1] are the same.
+     *
+     * An Equi leader can exist if and only if it is also the leader of the whole sequence.
+     * For example, if we say that value K is leader of sequence S1 and sequence S2 then that
+     * it automatically implies that the value K is also leader of both sequences combined. In other words, way
+     * can say that the value K can only be leader in both sequence S1 and S2 if and only if it is also a leader
+     * of both sequences combined (which is full array A in this case)
+     *
+     * So first we find the leader of full array A and its count and then
      */
     fun countEquiLeaders(A: Array<Int>): Int {
-        var count = 0
-        val forwardCandidates = findLeaderCandidatesForward(A)
-        val reverseCandidates = findLeaderCandidatesReverse(A)
-        for(i in 0 until A.size - 1) {
-            if (forwardCandidates[i] != -1_000_000_001
-                && forwardCandidates[i] == reverseCandidates[i+1]) {
-                    count++
-            }
-        }
-        return count
-    }
-
-    private fun findLeaderCandidatesReverse(A: Array<Int>): Array<Int> {
-        //we are going to reuse function to calculate forward leader candidates
-        //by passing it a reversed array and then reverse the returned array
-        val candidates = findLeaderCandidatesForward(A.reversedArray())
-        //reverse the output array as we passed the reversed array to function above
-        candidates.reverse()
-        return candidates
-    }
-
-    private fun findLeaderCandidatesForward(A: Array<Int>): Array<Int> {
-        val candidates = Array(A.size) {-1_000_000_001}
-        var stackSize = 0
-        var stackTop = -1_000_000_001
-        //var stackTopIndex = -1
-        A.forEachIndexed { index, value ->
-            if (stackSize == 0) {
-                //stack is empty so push the element onto stack
-                stackTop = value
-                stackSize++
-                //stackTopIndex = index
-            }  else {
-                //there is an element on stack so let's check if current element and last element are different
-                if (stackTop != value) {
-                    //decrease the size of stack by 1 (1 because we have not pushed current element to stack)
-                    //and the pair we are removing includes (current element, last element).
-                    stackSize--
-                } else {
-                    //last element and current are same so push current element to stack as well
-                    //Note: We are not updating stackTop because last and current elements are same so no need
-                    stackSize++
-                }
-            }
-
-            if (stackSize > 0) {
-                candidates[index] = stackTop
-            }
+        //find leader candidate
+        val leader = findLeaderUsingStack(A)
+        //calculate leader candidate count
+        val totalLeaderCount = countValue(A, leader)
+        //verify that count is good to be a leader (>n/2)
+        if (!isCountGoodToBeALeader(totalLeaderCount, A.size)) {
+            return 0
         }
 
-        return candidates
+        var equiLeadersCount = 0
+        var leaderCountSoFar = 0
+        for (i in 0 until A.size - 1) {
+            //keep incrementing the leader count
+            //to keep track of leader count in sequence [0..i]
+            if (A[i] == leader) {
+                leaderCountSoFar++
+            }
+
+            if (isEquiLeader(A, i, totalLeaderCount, leaderCountSoFar)) {
+                equiLeadersCount++
+            }
+        }
+        return equiLeadersCount
+    }
+
+    private fun isEquiLeader(A: Array<Int>, i: Int, totalLeaderCount: Int, leaderCountSoFar: Int): Boolean {
+        //sequence [0..i]
+        val firstSequenceLength = i + 1
+        //sequence [i+1..N-1]
+        val secondSequenceLength = A.size - (i + 1)
+
+        //check if `leader` is leader of both sequences
+        val remainingLeaderCount = totalLeaderCount - leaderCountSoFar
+        return leaderCountSoFar > firstSequenceLength / 2 &&
+            remainingLeaderCount > secondSequenceLength / 2
     }
 }
