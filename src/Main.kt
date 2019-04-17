@@ -1,7 +1,9 @@
 import problems.Leader
 
 fun main() {
-    val A = arrayOf(6, 8, 4, 6, 8, 6, 6)
-    val leaderIndex = Leader.findDominatorIndex(A)
-    println("leader index: $leaderIndex")
+    val B = IntArray(3)
+    B.toTypedArray()
+    val A = arrayOf(4, 3, 4, 4, 4, 2)
+    val count = Leader.countEquiLeaders(A)
+    println("equi leaders count: $count")
 }

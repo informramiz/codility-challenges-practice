@@ -127,4 +127,60 @@ object Leader {
         //remember: a leader has to occur more than n/2 times
         return if (candidateCount > A.size/2) candidateIndex else -1
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/8-leader/equi_leader/
+     * EquiLeader:
+     * Find the index S such that the leaders of the sequences A[0], A[1], ..., A[S]
+     * and A[S + 1], A[S + 2], ..., A[N - 1] are the same.
+     */
+    fun countEquiLeaders(A: Array<Int>): Int {
+        var count = 0
+        val forwardCandidates = findLeaderCandidatesForward(A)
+        val reverseCandidates = findLeaderCandidatesReverse(A)
+        for(i in 0 until A.size - 1) {
+            val firstCandidateIndex = forwardCandidates[i]
+            val secondCandidateIndex = reverseCandidates[i]
+            if (firstCandidateIndex == secondCandidateIndex && firstCandidateIndex != -1) {
+                count++
+            }
+        }
+        return count
+    }
+
+    private fun findLeaderCandidatesReverse(A: Array<Int>): Array<Int> {
+        return findLeaderCandidatesForward(A.reversedArray()).reversedArray()
+    }
+
+    private fun findLeaderCandidatesForward(A: Array<Int>): Array<Int> {
+        val candidates = Array(A.size) {-1}
+        var stackSize = 0
+        var stackTop = -1
+        var stackTopIndex = -1
+        A.forEachIndexed { index, value ->
+            if (stackSize == 0) {
+                //stack is empty so push the element onto stack
+                stackTop = value
+                stackSize++
+                stackTopIndex = index
+            }  else {
+                //there is an element on stack so let's check if current element and last element are different
+                if (stackTop != value) {
+                    //decrease the size of stack by 1 (1 because we have not pushed current element to stack)
+                    //and the pair we are removing includes (current element, last element).
+                    stackSize--
+                } else {
+                    //last element and current are same so push current element to stack as well
+                    //Note: We are not updating stackTop because last and current elements are same so no need
+                    stackSize++
+                }
+            }
+
+            if (stackSize > 0) {
+                candidates[index] = stackTopIndex
+            }
+        }
+
+        return candidates
+    }
 }
