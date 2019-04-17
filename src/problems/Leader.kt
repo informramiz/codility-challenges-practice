@@ -24,12 +24,7 @@ object Leader {
         //as array is sorted so if there is any leader it must be at the middle at has to occur more than n/2 times
         val candidate = A[A.size / 2]
 
-        var count = 0
-        A.forEach { value ->
-            if (value == candidate) {
-                count++
-            }
-        }
+        var count = countValue(A, candidate)
 
         return if (count > A.size/2) candidate else -1
     }
@@ -58,15 +53,10 @@ object Leader {
 
         //now let's count leader candidate occurrences to verify if it indeed a leader or not.
         val candidate = A[candidateIndex]
-        var candidateCount = 0
-        A.forEach { value ->
-            if (value == candidate) {
-                candidateCount++
-            }
-        }
+        val candidateCount = countValue(A, candidate)
 
         //remember: a leader has to occur more than n/2 times
-        return if (candidateCount > A.size / 2) candidate else -1
+        return if (isCountGoodToBeALeader(candidateCount, A.size)) candidate else -1
     }
 
     private fun findLeaderCandidateIndex(A: Array<Int>): Int {
@@ -117,15 +107,22 @@ object Leader {
 
         //now let's count leader candidate occurrences to verify if it indeed a leader or not.
         val candidate = A[candidateIndex]
+        val candidateCount = countValue(A, candidate)
+
+        //remember: a leader has to occur more than n/2 times
+        return if (isCountGoodToBeALeader(candidateCount, A.size)) candidateIndex else -1
+    }
+
+    private fun isCountGoodToBeALeader(candidateCount: Int, n: Int) = candidateCount > n / 2
+
+    private fun countValue(A: Array<Int>, valueToCount: Int): Int {
         var candidateCount = 0
         A.forEach { value ->
-            if (value == candidate) {
+            if (value == valueToCount) {
                 candidateCount++
             }
         }
-
-        //remember: a leader has to occur more than n/2 times
-        return if (candidateCount > A.size/2) candidateIndex else -1
+        return candidateCount
     }
 
     /**
