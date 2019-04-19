@@ -53,6 +53,8 @@ object MaxSlice {
      * https://app.codility.com/programmers/lessons/9-maximum_slice_problem/max_profit/
      */
     fun findMaximumProfit(A: Array<Int>): Int {
+        if (A.isEmpty()) return 0
+        
         var maxProfit = 0
         var minBuyPrice = A[0]
         for (i in 1 until A.size) {
