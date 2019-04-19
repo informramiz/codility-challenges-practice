@@ -1,7 +1,7 @@
 import problems.MaxSlice
 
 fun main() {
-    val A = arrayOf(5, -7, 3, 5, -2, 4, -1)
-    val maxSum = MaxSlice.findMaxSumSlice(A)
-    println("max slice sum: $maxSum")
+    val A = arrayOf(23171, 21011, 21123, 21366, 21013, 21367)
+    val maxProfilt = MaxSlice.findMaximumProfit(A)
+    println("max profit: $maxProfilt")
 }

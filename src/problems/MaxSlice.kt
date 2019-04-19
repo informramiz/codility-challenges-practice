@@ -48,6 +48,24 @@ object MaxSlice {
 
         return maxSum
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/9-maximum_slice_problem/max_profit/
+     */
+    fun findMaximumProfit(A: Array<Int>): Int {
+        var maxProfit = 0
+        var minBuyPrice = A[0]
+        for (i in 1 until A.size) {
+            //define new value for readability
+            val currentDayPrice = A[i]
+            //keep track of min buy price on any day.
+            minBuyPrice = Math.min(minBuyPrice, currentDayPrice)
+            maxProfit = Math.max(maxProfit, currentDayPrice - minBuyPrice)
+        }
+
+        //we have to return 0 if profit is not possible
+        return Math.max(maxProfit, 0)
+    }
 }
 
 data class Slice(var sum: Int = 0,
