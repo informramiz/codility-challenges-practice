@@ -54,7 +54,7 @@ object MaxSlice {
      */
     fun findMaximumProfit(A: Array<Int>): Int {
         if (A.isEmpty()) return 0
-        
+
         var maxProfit = 0
         var minBuyPrice = A[0]
         for (i in 1 until A.size) {
@@ -67,6 +67,21 @@ object MaxSlice {
 
         //we have to return 0 if profit is not possible
         return Math.max(maxProfit, 0)
+    }
+
+    /**
+     * https://app.codility.com/programmers/lessons/9-maximum_slice_problem/max_slice_sum/
+     * Note: The max sum can be negative so this is different problem than the one solved above
+     */
+    fun findMaxSliceSumWithNegativePossibleValue(A: Array<Int>): Int {
+        var maxSum = A[0].toLong()
+        var runningSum = A[0].toLong()
+        for (i in 1 until A.size) {
+            runningSum += A[i]
+            maxSum = Math.max(maxSum, runningSum)
+        }
+
+        return maxSum.toInt()
     }
 }
 
