@@ -74,14 +74,15 @@ object MaxSlice {
      * Note: The max sum can be negative so this is different problem than the one solved above
      */
     fun findMaxSliceSumWithNegativePossibleValue(A: Array<Int>): Int {
-        var maxSum = A[0].toLong()
-        var runningSum = A[0].toLong()
+        var maxSum = A[0]
+        var runningSum = A[0]
+
         for (i in 1 until A.size) {
-            runningSum += A[i]
+            runningSum = Math.max(A[i], runningSum + A[i])
             maxSum = Math.max(maxSum, runningSum)
         }
 
-        return maxSum.toInt()
+        return maxSum
     }
 }
 
