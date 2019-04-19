@@ -20,9 +20,36 @@ object MaxSlice {
             runningSum += value
             //sum can't be less than 0 as we must assume an empty slice has sum = 0
             runningSum = Math.max(0, runningSum)
+            //check if new running sum is greater than last max sum
             maxSum = Math.max(runningSum, maxSum)
         }
 
         return maxSum
     }
+
+    fun findMaxSumSlice(A: Array<Int>): Slice {
+        var maxSum = Slice()
+        val runningSum = Slice()
+        A.forEachIndexed { index, value ->
+            runningSum.sum += value
+            runningSum.q = index
+            //sum can't be less than 0 (as in that case empty slice has 0 sum)
+            if (runningSum.sum < 0) {
+                //reset running sum to 0
+                runningSum.sum = 0
+                runningSum.p = index + 1
+                runningSum.q = index + 1
+            }
+
+            if (maxSum.sum < runningSum.sum) {
+                maxSum = runningSum.copy()
+            }
+        }
+
+        return maxSum
+    }
 }
+
+data class Slice(var sum: Int = 0,
+                 var p: Int = 0,
+                 var q: Int = 0)
