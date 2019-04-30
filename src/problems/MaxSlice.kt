@@ -102,6 +102,7 @@ object MaxSlice {
                 //will contain sum of (x, y, z) slice = sum of slice (x, y) + sum(A[y+1] + ... A[z-1])
                 //= xySliceSum + sum(A[y+1] + ... + A[z-1])
                 var xyzSliceSum = xySliceSum
+                maxSum = Math.max(xyzSliceSum, maxSum)
                 //start z from y+2 because for z=y+1 will result in z-1=y and (x, y, z) indices are
                 //not allowed in sum calculation
                 for (z in y+2 until A.size) {
