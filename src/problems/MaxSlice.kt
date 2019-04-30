@@ -91,7 +91,7 @@ object MaxSlice {
      * Find the maximal sum of any double slice.
      */
     fun maxDoubleSliceSum(A: Array<Int>): Int {
-        var maxSum = -10_000
+        var maxSum = 0
 
         //NOTE: 0 ≤ X < Y < Z < N
         //SUM: A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1]
