@@ -84,6 +84,36 @@ object MaxSlice {
 
         return maxSum
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/9-maximum_slice_problem/max_double_slice_sum/
+     * MaxDoubleSliceSum
+     * Find the maximal sum of any double slice.
+     */
+    fun maxDoubleSliceSum(A: Array<Int>): Int {
+        var maxSum = -10_000
+
+        //NOTE: 0 ≤ X < Y < Z < N
+        //SUM: A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1]
+        for (x in 0 until A.size - 2) {
+            //will contain sum of (x, y) slice = sum(A[x+1] + ... + A[y-1])
+            var xySliceSum = 0
+            for (y in x+1 until A.size - 1 ) {
+                //will contain sum of (x, y, z) slice = sum of slice (x, y) + sum(A[y+1] + ... A[z-1])
+                //= xySliceSum + sum(A[y+1] + ... + A[z-1])
+                var xyzSliceSum = xySliceSum
+                //start z from y+2 because for z=y+1 will result in z-1=y and (x, y, z) indices are
+                //not allowed in sum calculation
+                for (z in y+2 until A.size) {
+                    xyzSliceSum += A[z-1]
+                    maxSum = Math.max(xyzSliceSum, maxSum)
+                }
+                xySliceSum += A[y]
+            }
+        }
+
+        return maxSum
+    }
 }
 
 data class Slice(var sum: Int = 0,
