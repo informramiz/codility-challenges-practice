@@ -108,6 +108,8 @@ object MaxSlice {
                     xyzSliceSum += A[z-1]
                     maxSum = Math.max(xyzSliceSum, maxSum)
                 }
+                //in case where z = size - 1 the z-loop will not execute so handle that case
+                maxSum = Math.max(xyzSliceSum, maxSum)
                 xySliceSum += A[y]
             }
         }
