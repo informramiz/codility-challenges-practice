@@ -89,33 +89,34 @@ object MaxSlice {
      * https://app.codility.com/programmers/lessons/9-maximum_slice_problem/max_double_slice_sum/
      * MaxDoubleSliceSum
      * Find the maximal sum of any double slice.
+     * The sum of double slice (X, Y, Z) is the total of
+     * A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1].
+     * Solution help: https://www.martinkysel.com/codility-maxdoubleslicesum-solution/
      */
     fun maxDoubleSliceSum(A: Array<Int>): Int {
-        var maxSum = 0
+        val prefixSums = Array(A.size) {0}
+        val suffixSums = Array(A.size) {0}
 
-        //NOTE: 0 ≤ X < Y < Z < N
-        //SUM: A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1]
-        for (x in 0 until A.size - 2) {
-            //will contain sum of (x, y) slice = sum(A[x+1] + ... + A[y-1])
-            var xySliceSum = 0
-            for (y in x+1 until A.size - 1 ) {
-                //will contain sum of (x, y, z) slice = sum of slice (x, y) + sum(A[y+1] + ... A[z-1])
-                //= xySliceSum + sum(A[y+1] + ... + A[z-1])
-                var xyzSliceSum = xySliceSum
-                maxSum = Math.max(xyzSliceSum, maxSum)
-                //start z from y+2 because for z=y+1 will result in z-1=y and (x, y, z) indices are
-                //not allowed in sum calculation
-                for (z in y+2 until A.size) {
-                    xyzSliceSum += A[z-1]
-                    maxSum = Math.max(xyzSliceSum, maxSum)
-                }
-                //in case where z = size - 1 the z-loop will not execute so handle that case
-                maxSum = Math.max(xyzSliceSum, maxSum)
-                xySliceSum += A[y]
-            }
+        //we can't include 0 or lastIndex because x and z are not included in sum
+        //also, sum can't be less than 0 because empty slice has sum 0 so
+        for (i in 1 until A.size-1) {
+            //pick max of 0 or current element + previous prefix sum
+            prefixSums[i] = Math.max(0, prefixSums[i-1] + A[i])
         }
 
-        return maxSum
+        for (i in A.size-2 downTo 1) {
+            //pick max of 0 or previous prefix sum (i+1 because we are going reverse
+            suffixSums[i] = Math.max(0, suffixSums[i+1] + A[i])
+        }
+
+        var maxDoubleSliceSum = 0
+        for (y in 1 until A.size-1) {
+            //as y is not part of max slice sum so we check for each index Yi where
+            //max(0, maxSum(1..Yi-1) + maxSum(Yi+1..N-1)) = max(0, prefixSums(Yi-1) + suffixSums(Yi+1))
+            maxDoubleSliceSum = Math.max(maxDoubleSliceSum, prefixSums[y-1] + suffixSums[y+1])
+        }
+
+        return maxDoubleSliceSum
     }
 }
 
