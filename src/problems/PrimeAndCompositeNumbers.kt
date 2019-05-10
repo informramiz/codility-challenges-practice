@@ -60,4 +60,28 @@ object PrimeAndCompositeNumbers {
 
         return true
     }
+
+    /**
+     * Coin Reversing Problem:
+     *
+     * Consider n coins aligned in a row. Each coin is showing heads at the beginning.
+     * 1 2 3 4 5 6 7 8 9 10
+     * Then, n people turn over corresponding coins as follows. Person i reverses coins with numbers
+     * that are multiples of i. That is, person i flips coins i, 2 · i, 3 · i, . . . until no more appropriate
+     * coins remain. The goal is to count the number of coins showing tails. In the above example,
+     * the final configuration is:
+     * T H H T H H H H T H
+     *
+     * Solution:
+     * A person i can only flip coins whose numbers are multiple if 'i' so that means person number has
+     * to be a divisor of the coin number. Coin will result in tail only if its number of divisors is an odd number.
+     * So total coins with odd number of divisors (each) is what we are interested in. A number can have odd number of
+     * divisors iff it is a perfect square and perfect squares in range (1...n) are <= sqrt(n) or more precisely
+     * = floor(sqrt(n))
+     *
+     * More details on link: https://informramiz.blogspot.com/2019/05/coin-reversing-codility-problem.html
+     */
+    fun countTailCoins(n: Int): Int {
+        return Math.floor(Math.sqrt(n.toDouble())).toInt()
+    }
 }
