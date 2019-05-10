@@ -45,4 +45,19 @@ object PrimeAndCompositeNumbers {
 
         return count
     }
+
+    /**
+     * Prime is a number that is divisible by only two numbers: (1, itself)
+     */
+    fun checkIfPrime(n: Int): Boolean {
+        var i = 2
+        while (i * i <= n) {
+            if (n % i == 0) {
+                return false
+            }
+            i++
+        }
+
+        return true
+    }
 }
