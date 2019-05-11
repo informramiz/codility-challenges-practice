@@ -1,5 +1,5 @@
 import problems.PrimeAndCompositeNumbers
 
 fun main() {
-    println("maxSum: ${PrimeAndCompositeNumbers.countTailCoins(10)}")
+    println("Factors Count: ${PrimeAndCompositeNumbers.countFactors(16)}")
 }
