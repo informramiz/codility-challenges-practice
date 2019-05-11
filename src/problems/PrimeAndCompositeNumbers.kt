@@ -20,11 +20,12 @@ object PrimeAndCompositeNumbers {
      *  counted just once.
      */
     fun countDivisors(n: Int): Int {
-        var i = 1
+        val longN = n.toLong()
+        var i = 1L
         var count = 0
         while (i * i < n) {
             //check if i divides n
-            if (n % i == 0) {
+            if (longN % i == 0L) {
                 //we count both i and it's symmetric divisor n/i
                 //because i can only divide n if
                 // i x (n/i) = n
@@ -39,7 +40,7 @@ object PrimeAndCompositeNumbers {
 
         //consider the symmetric divisor case: 6 x 6 = 36 so in this we only count one number (6)
         //and not both numbers because both numbers are same
-        if (i * i == n) {
+        if (i * i == longN) {
             count++
         }
 
