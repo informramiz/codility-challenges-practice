@@ -99,4 +99,53 @@ object PrimeAndCompositeNumbers {
         //factors are just divisors so count divisors
         return countDivisors(n)
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/min_perimeter_rectangle/
+     * An integer N is given, representing the area of some rectangle.
+     * The area of a rectangle whose sides are of length A and B is A * B, and the perimeter is 2 * (A + B).
+     * The goal is to find the minimal perimeter of any rectangle whose area equals N. The sides of this rectangle should be only integers.
+     * For example, given integer N = 30, rectangles of area 30 are:
+     * (1, 30), with a perimeter of 62,
+     * (2, 15), with a perimeter of 34,
+     * (3, 10), with a perimeter of 26,
+     * (5, 6), with a perimeter of 22.
+     * Write a function:
+     * class Solution { public int solution(int N); }
+     * that, given an integer N, returns the minimal perimeter of any rectangle whose area is exactly equal to N.
+     *
+     * For example, given an integer N = 30, the function should return 22, as explained above.
+     * Write an efficient algorithm for the following assumptions:
+     * N is an integer within the range [1..1,000,000,000].
+     */
+    fun findMinimumPerimeter(n: Int): Int {
+        //we will use long to avoid integer overflow which can easily happen if given
+        //n = Int.MAX_VALUE
+        val longN = n.toLong()
+        var i = 1L
+        var minPerimeter = (2 + (longN + longN))
+
+        while (i * i < longN) {
+            //rectangles with area N will have sides A, B as divisors so
+            //we need to find divisors and then calculate perimeter and
+            //keep track of minimum perimeter
+            if (n % i == 0L) {
+                val A = i
+                val B = n / i
+                val perimeter = 2 * (A + B)
+                minPerimeter = Math.min(minPerimeter, perimeter)
+            }
+
+            i++
+        }
+
+        //handle the boundary case of perfect squares (6 x 6 = 36)
+        if (i * i == longN) {
+            //in this case both sides are i (A = i, B = i)
+            val perimeter = 2 * (i + i)
+            minPerimeter = Math.min(minPerimeter, perimeter)
+        }
+
+        return minPerimeter.toInt()
+    }
 }
