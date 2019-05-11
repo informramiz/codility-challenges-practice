@@ -39,7 +39,7 @@ object PrimeAndCompositeNumbers {
 
         //consider the symmetric divisor case: 6 x 6 = 36 so in this we only count one number (6)
         //and not both numbers because both numbers are same
-        if (i * i == 36) {
+        if (i * i == n) {
             count++
         }
 
