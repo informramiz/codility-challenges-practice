@@ -148,4 +148,71 @@ object PrimeAndCompositeNumbers {
 
         return minPerimeter.toInt()
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/peaks/
+     * Peaks
+     * Divide an array into the maximum number of same-sized blocks, each of which should contain
+     * an index P such that A[P - 1] < A[P] > A[P + 1].
+     */
+    fun peaks(A: IntArray): Int {
+        //array size must be >= 3 for any peak to exist
+        if (A.size < 3) return 0
+
+        val prefixSums = peaksPrefixSum(A)
+
+        //if there is no peak at all, then just return
+        if (prefixSums[A.size] == 0) return 0
+
+        //the smaller the size of k the max blocks we will have and because k will be increasing
+        //so the first ever k for which all blocks will contain peaks
+        //will result in max blocks
+        var k = 2
+        //Because all blocks should be equal size so max possible K will be <= n/2
+        // because the only other possible K is when K = N (1 block)
+        val halfN = A.size / 2
+        while (k <= halfN ) {
+            if (A.size % k == 0) {
+                if (doAllBlocksContainPeaks(prefixSums, k)) {
+                    //return blocks count
+                    return A.size / k
+                }
+            }
+            k++
+        }
+
+        //Remember, we have already checked at top of function for at least 1 peak in full array
+        //so this code flow is only reached when no possible blocks were found with each having a peak
+        //that means the whole array is just 1 block
+        //so just return 1
+        return 1
+    }
+
+    private fun peaksPrefixSum(A: IntArray): Array<Int> {
+        val prefixSums = Array(A.size + 1) {0}
+        for (i in 1 until A.size) {
+            prefixSums[i+1] = prefixSums[i] + if (i+1 < A.size && A[i] > A[i-1] && A[i] > A[i+1]) 1 else 0
+        }
+
+        return prefixSums
+    }
+
+    private fun doAllBlocksContainPeaks(prefixSums: Array<Int>, blockSize: Int): Boolean {
+        for (i in 0..prefixSums.size-blockSize step blockSize) {
+            if (!isPeakPresent(prefixSums, i, i+blockSize-1)) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    private fun isPeakPresent(prefixSums: Array<Int>, x: Int, y: Int): Boolean {
+        return peaksCountInRange(prefixSums, x, y) > 0
+    }
+
+    private fun peaksCountInRange(prefixSums: Array<Int>, x: Int, y: Int): Int {
+        //Py = Py+1 - Px
+        return prefixSums[y+1] - prefixSums[x]
+    }
 }
