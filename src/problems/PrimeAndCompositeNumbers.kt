@@ -159,6 +159,8 @@ object PrimeAndCompositeNumbers {
         //array size must be >= 3 for any peak to exist
         if (A.size < 3) return 0
 
+        //calculate prefixSums for peaks (peaks encountered till any index from left to right)
+        //this will help us in easily finding peaks count in a given range.
         val prefixSums = peaksPrefixSum(A)
 
         //if there is no peak at all, then just return
@@ -169,9 +171,10 @@ object PrimeAndCompositeNumbers {
         //will result in max blocks
         var k = 2
         //Because all blocks should be equal size so max possible K will be <= n/2
-        // because the only other possible K is when K = N (1 block)
+        //because the only other possible K is when K = N (1 block)
         val halfN = A.size / 2
         while (k <= halfN ) {
+            //K can only divide array A of size N in equal blocks if it is a divisor of the N
             if (A.size % k == 0) {
                 if (doAllBlocksContainPeaks(prefixSums, k)) {
                     //return blocks count
