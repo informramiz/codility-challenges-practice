@@ -218,4 +218,68 @@ object PrimeAndCompositeNumbers {
         //Py = Py+1 - Px
         return prefixSums[y+1] - prefixSums[x]
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/flags/
+     * Flags
+     * Find the maximum number of flags that can be set on mountain peaks.
+     */
+    fun findMaxSettableFlags(A: IntArray): Int {
+        //find peak indexes
+        val peakIndexes = findPeakIndexes(A)
+        if (peakIndexes.isEmpty()) {
+            return 0
+        }
+
+        var maxFlagsSet = 0
+        //for each flag count K, check how many flags can we actually set on peaks
+        //while satisfying all conditions
+        for (k in 1..peakIndexes.size) {
+            val newSetFlagsCount = setFlags(peakIndexes, k)
+            //check increasing the flags counting is not resulting in increase in
+            //set flags on peaks. It means, all possible peaks are already covered
+            if (maxFlagsSet == newSetFlagsCount) {
+                break
+            }
+            //keep track of max flags set
+            maxFlagsSet = Math.max(maxFlagsSet, newSetFlagsCount)
+        }
+
+        return maxFlagsSet
+    }
+
+    private fun findPeakIndexes(A: IntArray): List<Int> {
+        if (A.size < 3) return emptyList()
+
+        val peakIndexes = mutableListOf<Int>()
+        for (i in 1 until A.size) {
+            //check if it is a peak
+            if (i+1 < A.size && A[i] > A[i-1] && A[i] > A[i+1]) {
+                peakIndexes.add(i)
+            }
+        }
+
+        return peakIndexes
+    }
+
+    private fun setFlags(peakIndexes: List<Int>, flagsCount: Int): Int {
+        if (peakIndexes.isEmpty()) {
+            return 0
+        }
+        //first peak will definitely have a flag set so -1
+        var remainingFlags = flagsCount - 1
+        //first peak flag already set
+        var previousFlagIndex = peakIndexes[0]
+
+        for (pIndex in peakIndexes) {
+            if (pIndex - previousFlagIndex >= flagsCount) {
+                previousFlagIndex = pIndex
+                remainingFlags--
+            }
+
+            if (remainingFlags <= 0) break
+        }
+
+        return flagsCount - remainingFlags
+    }
 }
