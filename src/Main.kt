@@ -1,9 +1,9 @@
-import problems.MaxSlice
+import problems.PrimeAndCompositeNumbers
 
 fun main() {
-    val A = arrayOf(3, 2, 6, -1, 4, 5, -1, 2)
-//    val A = arrayOf(5, 17, 0, 3)
-//    val A = arrayOf(0, 10, -5, -2, 0)
-    val maxSum = MaxSlice.maxDoubleSliceSum(A)
-    println("maxSum: $maxSum")
+//    val A = intArrayOf(1, 2, 1, 3, 1, 4, 1, 2)
+    val A = intArrayOf(1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2)
+//    val A = intArrayOf(0, 0, 0, 0, 0, 1, 0, 1, 0, 1)
+    val maxSetFlags = PrimeAndCompositeNumbers.findMaxSettableFlags(A)
+    println("Maximum Flags: ${maxSetFlags}")
 }
