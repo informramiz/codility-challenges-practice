@@ -225,29 +225,55 @@ object PrimeAndCompositeNumbers {
      * Find the maximum number of flags that can be set on mountain peaks.
      */
     fun findMaxSettableFlags(A: IntArray): Int {
-        //find peak indexes
+        //find peak indexes in array A
         val peakIndexes = findPeakIndexes(A)
+        //if there are no peaks then we can't set any flags at all
         if (peakIndexes.isEmpty()) {
             return 0
         }
 
+        //variable to keep track of max flags set
         var maxFlagsSet = 0
-        //for each flag count K, check how many flags can we actually set on peaks
-        //while satisfying all conditions
-        for (k in 1..peakIndexes.size) {
-            val newSetFlagsCount = setFlags(peakIndexes, k)
-            //check increasing the flags counting is not resulting in increase in
-            //set flags on peaks. It means, all possible peaks are already covered
-            if (maxFlagsSet == newSetFlagsCount) {
-                break
+
+        //the max flags we can set are equal to total peaks
+        //in case each peak is exactly peaks.size distance (index distance) apart
+        //and min flags is 1 because we can always set flag on the first peak so
+        //the range for possible flag count values is [1, peaks.size]
+        var start = 1
+        var end = peakIndexes.size
+
+        //we will use binary search. We know that if we can set X flags then that
+        //means that we also set x-1, x-2 ... flags so the range we should check is
+        //(mid, end] and if we can't set x flags then we know that we can't set
+        //x+1, x+2 flags count as well so the range to check is [start, mid)
+        while (start <= end) {
+            //get the middle of flag counts range [start, end]
+            val midFlagsCount = Math.ceil((start + end) / 2.0).toInt()
+            //try setting the flags K = midFlagsCount
+            val newSetFlagsCount = setFlags(peakIndexes, midFlagsCount)
+
+            //check if all flags were set
+            if (newSetFlagsCount >= midFlagsCount) {
+                //that means all flags before mid can be set (range: [start, mid])
+                //so let's check how many more flags we can set
+                //in the range (mid, end]
+                start = midFlagsCount + 1
+            } else if (newSetFlagsCount < midFlagsCount) {
+                //not all flags were set so it means
+                //we should check the range [start, mid]
+                end = midFlagsCount - 1
             }
-            //keep track of max flags set
-            maxFlagsSet = Math.max(maxFlagsSet, newSetFlagsCount)
+
+            //keep track of max flags set so far.
+            maxFlagsSet = Math.max(newSetFlagsCount, maxFlagsSet)
         }
 
         return maxFlagsSet
     }
 
+    /**
+     * Returns peaks indexes in array A
+     */
     private fun findPeakIndexes(A: IntArray): List<Int> {
         if (A.size < 3) return emptyList()
 
@@ -262,24 +288,35 @@ object PrimeAndCompositeNumbers {
         return peakIndexes
     }
 
+    /**
+     * Try to set given number of flags (flagsCount)
+     * and return the number of flags that were successfully set on peaks
+     */
     private fun setFlags(peakIndexes: List<Int>, flagsCount: Int): Int {
+        //we need at least 1 peak to set any flag
         if (peakIndexes.isEmpty()) {
             return 0
         }
-        //first peak will definitely have a flag set so -1
+        //first peak will definitely have a flag set so flagsCount-1
         var remainingFlags = flagsCount - 1
         //first peak flag already set
         var previousFlagIndex = peakIndexes[0]
 
         for (pIndex in peakIndexes) {
+            //check if current peakIndex is at K = flagsCount distance apart from the previous peak
+            //as this is the condition for setting flags.
             if (pIndex - previousFlagIndex >= flagsCount) {
+                //Make current peakIndex as previous flag index (as flag is set) for use in next iteration
                 previousFlagIndex = pIndex
+                //as 1 flag was set so decrease flag count
                 remainingFlags--
             }
 
+            //if we have already set all flags so no need to check more
             if (remainingFlags <= 0) break
         }
 
+        //return the max flags set
         return flagsCount - remainingFlags
     }
 }
