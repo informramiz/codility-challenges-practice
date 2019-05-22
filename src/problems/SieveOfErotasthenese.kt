@@ -11,7 +11,7 @@ package problems
  * is sucient to remove only multiples of prime numbers not exceeding Ôn. In this way, all
  * composite numbers will be removed.
  */
-object SeiveOfErotasthenese {
+object SieveOfErotasthenese {
     /**
      * Finds prime numbers in range[2..n]
      */
