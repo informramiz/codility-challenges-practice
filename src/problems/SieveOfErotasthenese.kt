@@ -144,12 +144,7 @@ object SieveOfErotasthenese {
         val primeDivisors = primeDivisors(n)
         val prefixSumOfSemiPrimesCount = Array(n+2) { 0 }
 
-        //start from i = 4 because 4 is the first semi prime
-        //remember Px+1 = [x] + Px so sum is always at next index
-        //so is 4 is semi prime it's count will be stored at index 5
-        //P[5] = P[4] + 1 //1 because 4 is semi prime
-        prefixSumOfSemiPrimesCount[5] = 1
-        for (i in 5..n) {
+        for (i in 1..n) {
             if (isSemiPrime(i, primeDivisors)) {
                 //add 1 because i is semi prime
                 prefixSumOfSemiPrimesCount[i+1] = prefixSumOfSemiPrimesCount[i] + 1
