@@ -16,23 +16,26 @@ object SeiveOfErotasthenese {
      * Finds prime numbers in range[2..n]
      */
     fun findPrimesInRange(n: Int): Array<Int> {
-        val primes = Array(n+1) {true}
-        primes[0] = false
-        primes[1] = false
+        val isPrimeNumber = Array(n+1) {true}
+        isPrimeNumber[0] = false
+        isPrimeNumber[1] = false
 
         var i = 2
         while (i * i <= n) {
-            var k = i * i
-            while (k <= n) {
-                primes[k] = false
-                k += i
+            //make sure i has not already been crossed out (set to false)
+            if (isPrimeNumber[i]) {
+                var k = i * i
+                while (k <= n) {
+                    isPrimeNumber[k] = false
+                    k += i
+                }
             }
 
             i++
         }
 
-        var primeNumbers = mutableListOf<Int>()
-        primes.forEachIndexed { index, isPrime ->
+        val primeNumbers = mutableListOf<Int>()
+        isPrimeNumber.forEachIndexed { index, isPrime ->
             if (isPrime) {
                 primeNumbers.add(index)
             }
