@@ -1,6 +1,6 @@
 import problems.SeiveOfErotasthenese
 
 fun main() {
-    val primeNumbers = SeiveOfErotasthenese.findPrimesInRange(17)
-    println("Prime Numbers: ${primeNumbers.joinToString()}")
+    val primeFactors = SeiveOfErotasthenese.factorize(20)
+    println("Prime Factors: ${primeFactors.joinToString()}")
 }
