@@ -48,12 +48,11 @@ object SieveOfErotasthenese {
      * https://codility.com/media/train/9-Sieve.pdf
      * Find prime factors for given number n
      * @param n, number for which to find prime factors/divisors
+     * @param primeDivisors, represent smallest prime divisor for each number in range [2, n]
      * @return Array, prime factors/divisors of number n
      */
-    fun factorize(n: Int): List<Int> {
+    fun factorize(n: Int, primeDivisors: Array<Int>): List<Int> {
         val factors = mutableListOf<Int>()
-        //find prime divisors for each number in range[2, n]
-        val primeDivisors = primeDivisors(n)
 
         //start from n and keep decomposing it into primes
         //n1 = n/prime1, n2 = n1/prime2 ... primeN = 1
@@ -71,6 +70,12 @@ object SieveOfErotasthenese {
         factors += x
 
         return factors
+    }
+
+    fun factorize(n: Int): List<Int> {
+        //find prime divisors for each number in range[2, n]
+        val primeDivisors = primeDivisors(n)
+        return factorize(n, primeDivisors)
     }
 
     /**
@@ -104,5 +109,68 @@ object SieveOfErotasthenese {
         }
 
         return primeDivisors
+    }
+
+    /**
+     * https://app.codility.com/programmers/lessons/11-sieve_of_eratosthenes/count_semiprimes/
+     * CountSemiprimes
+     * Count the semiprime numbers in the given range [a, b]
+     *
+     *  int[] solution(int N, int[] P, int[] Q)
+     *
+     * Given an integer N and two non-empty arrays P and Q consisting of M integers,
+     * returns an array consisting of M elements specifying the consecutive answers to all the queries.
+     */
+    fun countSemiPrimes(N: Int, P: IntArray, Q: IntArray): IntArray {
+        val prefixSumOfSemiPrimesCount = prefixSumOfSemiPrimesCount(N)
+
+        val semiPrimesCount = IntArray(P.size) {0}
+        for (i in 0 until P.size) {
+            val p = P[i]
+            val q = Q[i]
+            //calculate count of semi-primes using prefix sums
+            semiPrimesCount[i] = prefixSumOfSemiPrimesCount[q+1] - prefixSumOfSemiPrimesCount[p]
+        }
+
+        return semiPrimesCount
+    }
+
+    /**
+     * Given number n returns the prefix sums of semi primes count in range[2, n]
+     * @param n, end of range
+     * @return An array of prefix sums of semi primes count in range [2, n]
+     */
+    private fun prefixSumOfSemiPrimesCount(n: Int): Array<Int> {
+        val primeDivisors = primeDivisors(n)
+        val prefixSumOfSemiPrimesCount = Array(n+2) { 0 }
+
+        //start from i = 4 because 4 is the first semi prime
+        //remember Px+1 = [x] + Px so sum is always at next index
+        //so is 4 is semi prime it's count will be stored at index 5
+        //P[5] = P[4] + 1 //1 because 4 is semi prime
+        prefixSumOfSemiPrimesCount[5] = 1
+        for (i in 5..n) {
+            if (isSemiPrime(i, primeDivisors)) {
+                //add 1 because i is semi prime
+                prefixSumOfSemiPrimesCount[i+1] = prefixSumOfSemiPrimesCount[i] + 1
+            } else {
+                //as i is not semi prime so count remains same
+                prefixSumOfSemiPrimesCount[i+1] = prefixSumOfSemiPrimesCount[i]
+            }
+        }
+
+        return prefixSumOfSemiPrimesCount
+    }
+
+    /**
+     * Check if given number is a semi prime. A semi prime is product of two (may or may not be distinct)
+     * prime numbers
+     * @param n, number to check for semi prime
+     * @param primeDivisors, represent smallest prime divisor for each number in range [2, n]
+     * @return true/false, depending on if the number is prime
+     */
+    private fun isSemiPrime(n: Int, primeDivisors: Array<Int>): Boolean {
+        val factors = factorize(n, primeDivisors)
+        return factors.size == 2
     }
 }
