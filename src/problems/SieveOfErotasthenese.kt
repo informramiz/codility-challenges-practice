@@ -219,7 +219,7 @@ object SieveOfErotasthenese {
         return A.map { A.size - divisorsCount[it] }.toTypedArray()
     }
 
-    private fun countNumbers(A: Array<Int>): Array<Int> {
+    fun countNumbers(A: Array<Int>): Array<Int> {
         //find max number in array A
         val N = A.max() ?: 0
         val count = Array(N + 1) {0}
@@ -231,7 +231,7 @@ object SieveOfErotasthenese {
         return count
     }
 
-    private fun countDivisors(n: Int, count: Array<Int>): Int {
+    fun countDivisors(n: Int, count: Array<Int>): Int {
         var divisorsCount = 0
         var i = 1
         while (i * i <= n) {
@@ -240,7 +240,7 @@ object SieveOfErotasthenese {
                 //now check for symmetric divisor
                 val symmetricDivisor = n / i
                 //make sure symmetric divisor is not same as i or n as they are already covered
-                if (symmetricDivisor != i || symmetricDivisor != n) {
+                if (symmetricDivisor != i) {
                     divisorsCount += count[symmetricDivisor]
                 }
             }
