@@ -168,4 +168,85 @@ object SieveOfErotasthenese {
         val factors = factorize(n, primeDivisors)
         return factors.size == 2
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/11-sieve_of_eratosthenes/count_non_divisible/
+     * CountNonDivisible
+     * Calculate the number of elements of an array that are not divisors of each element.
+     *
+     * You are given an array A consisting of N integers.
+     * For each number A[i] such that 0 ≤ i < N, we want to count the number of elements of the array that are not the divisors of A[i]. We say that these elements are non-divisors.
+     * For example, consider integer N = 5 and array A such that:
+     * A[0] = 3
+     * A[1] = 1
+     * A[2] = 2
+     * A[3] = 3
+     * A[4] = 6
+     * For the following elements:
+     * A[0] = 3, the non-divisors are: 2, 6,
+     * A[1] = 1, the non-divisors are: 3, 2, 3, 6,
+     * A[2] = 2, the non-divisors are: 3, 3, 6,
+     * A[3] = 3, the non-divisors are: 2, 6,
+     * A[4] = 6, there aren't any non-divisors.
+     * Write a function:
+     * class Solution { public int[] solution(int[] A); }
+     * that, given an array A consisting of N integers, returns a sequence of integers representing the amount of non-divisors.
+     * Result array should be returned as an array of integers.
+     * For example, given:
+     * A[0] = 3
+     * A[1] = 1
+     * A[2] = 2
+     * A[3] = 3
+     * A[4] = 6
+     * the function should return [2, 4, 3, 2, 0], as explained above.
+     */
+    fun countNonDivisors(A: Array<Int>): Array<Int> {
+        //count all numbers in array
+        val count = countNumbers(A)
+        //create array to maintain count for each
+        val divisorsCount = Array(count.size) {0}
+
+        for (a in A) {
+            //check if a is already gone through processing and already has divisors count
+            if (divisorsCount[a] > 0) {
+                //as a already has divisors count calculated so no need to repeat
+                continue
+            }
+
+            divisorsCount[a] = countDivisors(a, count)
+        }
+
+        return A.map { A.size - divisorsCount[it] }.toTypedArray()
+    }
+
+    private fun countNumbers(A: Array<Int>): Array<Int> {
+        //find max number in array A
+        val N = A.max() ?: 0
+        val count = Array(N + 1) {0}
+
+        for (a in A) {
+            count[a]++
+        }
+
+        return count
+    }
+
+    private fun countDivisors(n: Int, count: Array<Int>): Int {
+        var divisorsCount = 0
+        var i = 1
+        while (i * i <= n) {
+            if (n % i == 0) {
+                divisorsCount += count[i]
+                //now check for symmetric divisor
+                val symmetricDivisor = n / i
+                //make sure symmetric divisor is not same as i or n as they are already covered
+                if (symmetricDivisor != i || symmetricDivisor != n) {
+                    divisorsCount += count[symmetricDivisor]
+                }
+            }
+            i++
+        }
+
+        return divisorsCount
+    }
 }

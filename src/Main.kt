@@ -1,9 +1,10 @@
 import problems.SieveOfErotasthenese
 
 fun main() {
-    val P = intArrayOf(1, 4, 16)
-    val Q = intArrayOf(26, 10, 20)
-    val N = 26
-    val semiPrimesCountForEachRangePQ = SieveOfErotasthenese.countSemiPrimes(N, P, Q)
-    println("Prime Factors: ${semiPrimesCountForEachRangePQ.joinToString()}")
+    val A = arrayOf(3, 1, 2, 3, 6)
+//    //let's test individual methods first to make sure they are right
+//    val count = SieveOfErotasthenese.countNumbers(A)
+//    val divisorsCount = SieveOfErotasthenese.countDivisors(1, count)
+    val dCounts = SieveOfErotasthenese.countNonDivisors(A)
+    println("Divisors Count: ${dCounts.joinToString()}")
 }
