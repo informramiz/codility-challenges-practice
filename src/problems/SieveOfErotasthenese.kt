@@ -213,10 +213,19 @@ object SieveOfErotasthenese {
                 continue
             }
 
+            //count divisors, including division by itself
             divisorsCount[a] = countDivisors(a, count)
         }
 
-        return A.map { A.size - divisorsCount[it] }.toTypedArray()
+        //now that we have divisors count for each number a in array A, we can easily
+        //calculate non-divisors by subtracting divisor count of each number for total numbers in A
+        val nonDivisorsCount = Array(A.size) {0}
+        for (i in 0 until A.size) {
+            val a = A[i]
+            nonDivisorsCount[i] = A.size - divisorsCount[a]
+        }
+
+        return nonDivisorsCount
     }
 
     fun countNumbers(A: Array<Int>): Array<Int> {
