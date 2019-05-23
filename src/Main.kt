@@ -1,9 +1,13 @@
-import problems.PrimeAndCompositeNumbers
+import problems.SieveOfErotasthenese
 
 fun main() {
-//    val A = intArrayOf(1, 2, 1, 3, 1, 4, 1, 2)
-    val A = intArrayOf(1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2)
-//    val A = intArrayOf(0, 0, 0, 0, 0, 1, 0, 1, 0, 1)
-    val maxSetFlags = PrimeAndCompositeNumbers.findMaxSettableFlags(A)
-    println("Maximum Flags: ${maxSetFlags}")
+    val A = arrayOf(3, 1, 2, 3, 6)
+
+//    //let's test individual methods first to make sure they are right
+//    val count = SieveOfErotasthenese.countNumbers(A)
+//    val divisorsCount = SieveOfErotasthenese.countDivisors(2, count)
+//    println("Divisors Count: ${divisorsCount}")
+
+    val dCounts = SieveOfErotasthenese.countNonDivisors(A)
+    println("Divisors Count: ${dCounts.joinToString()}")
 }
