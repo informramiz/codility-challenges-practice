@@ -201,6 +201,7 @@ object SieveOfErotasthenese {
      * the function should return [2, 4, 3, 2, 0], as explained above.
      */
     fun countNonDivisors(A: Array<Int>): Array<Int> {
+        if (A.isEmpty()) return emptyArray()
         //count all numbers in array
         val count = countNumbers(A)
         //create array to maintain count for each
