@@ -69,4 +69,15 @@ object EuclideanAlgorithm {
     fun gcdBinary(a: Int, b: Int): Int {
         return gcdBinary(a, b, 1)
     }
+
+    /**
+     * The least common multiple (LCM) of two integers a and b is the smallest positive integer that
+     * is divisible by both a and b. There is the following relation:
+     * lcm(a, b) = (a·b) / gcd(a,b)
+     *
+     * so if we know gcd we can calculate LCM
+     */
+    fun lcm(a: Int, b: Int): Int {
+        return (a * b) / gcdBinary(a, b)
+    }
 }
