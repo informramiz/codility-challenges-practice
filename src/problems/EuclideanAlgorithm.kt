@@ -80,4 +80,19 @@ object EuclideanAlgorithm {
     fun lcm(a: Int, b: Int): Int {
         return (a * b) / gcdBinary(a, b)
     }
+
+    /**
+     * Find lcm for multiple integers
+     * lcm(a1, a2, ... , an) = lcm(a1, lcm(a2, ... , an))
+     */
+    fun lcm(A: Array<Int>): Int {
+        if (A.size < 2) return -1
+
+        var lcmValue = 1
+        for (i in 0 until A.size) {
+            lcmValue = lcm(lcmValue, A[i])
+        }
+
+        return lcmValue
+    }
 }
