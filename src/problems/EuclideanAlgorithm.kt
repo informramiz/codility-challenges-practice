@@ -96,4 +96,43 @@ object EuclideanAlgorithm {
 
         return lcmValue
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/12-euclidean_algorithm/chocolates_by_numbers/
+     * ------ChocolatesByNumbers----------
+     * There are N eatChocolates in a circle. Count the number of eatChocolates you will eat.
+     *
+     * DETAILS:
+     * Two positive integers N and M are given. Integer N represents the number of eatChocolates arranged in a circle, numbered from 0 to N − 1.
+     * You start to eat the eatChocolates. After eating a chocolate you leave only a wrapper.
+     * You begin with eating chocolate number 0. Then you omit the next M − 1 eatChocolates or wrappers on the circle, and eat the following one.
+     * More precisely, if you ate chocolate number X, then you will next eat the chocolate with number (X + M) modulo N (remainder of division).
+     * You stop eating when you encounter an empty wrapper.
+     *
+     * For example, given integers N = 10 and M = 4. You will eat the following eatChocolates: 0, 4, 8, 2, 6.
+     * The goal is to count the number of eatChocolates that you will eat, following the above rules.
+     *
+     * Write a function:
+     * class Solution { public int solution(int N, int M); }
+     *
+     * that, given two positive integers N and M, returns the number of eatChocolates that you will eat.
+     * For example, given integers N = 10 and M = 4. the function should return 5, as explained above.
+     *
+     * Write an efficient algorithm for the following assumptions:
+     * N and M are integers within the range [1..1,000,000,000].
+     *
+     * @param N, number of eatChocolates number in range [0, N-1]
+     */
+    fun eatChocolates(N: Int, M: Int): Int {
+        //Consider the circle as a straight line, the place where the first eaten chocolate is revisited, proceeding
+        //with step M is actually the same as you if you proceed with step N. For example, N=10, if you proceed with
+        //step N=10 then first chocolate is revisited at step 20. Similarly, if you proceed with step M=4 then
+        //first eaten chocolate is revisited at step 20. As step# in both cases is same so the step/place where
+        //first eaten chocolate is revisited (or an empty wrapper is encountered) is LCM of both M and N, so LCM(M,N)
+        //
+        //step at which first chocolate revisited = stepNumberOfRevisit = LCM(M,N)
+        //total jumps after which that (step occurs) chocolate is revisited,
+        //proceeding with step M is = stepNumberOfRevisit / M = lcm(M, N) / M
+        return (lcm(M.toLong(), N.toLong()) / M).toInt()
+    }
 }

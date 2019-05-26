@@ -1,6 +1,7 @@
 import problems.EuclideanAlgorithm
 
 fun main() {
-    val gcd = EuclideanAlgorithm.lcm(arrayOf(24, 9, 48))
-    print(gcd)
+    //val chocolatesEaten = EuclideanAlgorithm.eatChocolates(10, 4)
+    val chocolatesEaten = EuclideanAlgorithm.eatChocolates(947853, 4453)
+    print(chocolatesEaten)
 }
