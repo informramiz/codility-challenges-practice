@@ -76,21 +76,22 @@ object EuclideanAlgorithm {
      * lcm(a, b) = (a·b) / gcd(a,b)
      *
      * so if we know gcd we can calculate LCM
+     * @return long, long because otherwise integer overflow can happen
      */
-    fun lcm(a: Int, b: Int): Int {
-        return (a * b) / gcdBinary(a, b)
+    fun lcm(a: Long, b: Long): Long {
+        return ((a * b) / gcdBinary(a.toInt(), b.toInt()))
     }
 
     /**
      * Find lcm for multiple integers
      * lcm(a1, a2, ... , an) = lcm(a1, lcm(a2, ... , an))
      */
-    fun lcm(A: Array<Int>): Int {
+    fun lcm(A: Array<Int>): Long {
         if (A.size < 2) return -1
 
-        var lcmValue = 1
+        var lcmValue = 1L
         for (i in 0 until A.size) {
-            lcmValue = lcm(lcmValue, A[i])
+            lcmValue = lcm(lcmValue, A[i].toLong())
         }
 
         return lcmValue
