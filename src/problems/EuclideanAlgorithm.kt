@@ -127,7 +127,9 @@ object EuclideanAlgorithm {
         //Consider the circle as a straight line, the place where the first eaten chocolate is revisited, proceeding
         //with step M is actually the same as you if you proceed with step N. For example, N=10, if you proceed with
         //step N=10 then first chocolate is revisited at step 20. Similarly, if you proceed with step M=4 then
-        //first eaten chocolate is revisited at step 20. As step# in both cases is same so the step/place where
+        //first eaten chocolate is revisited at step 20. If N = 12, M = 9 then first chocolate will be revisited
+        //at step 36 because this is where M and N meet.
+        // As step# in both cases is same so the step/place where
         //first eaten chocolate is revisited (or an empty wrapper is encountered) is LCM of both M and N, so LCM(M,N)
         //
         //step at which first chocolate revisited = stepNumberOfRevisit = LCM(M,N)
