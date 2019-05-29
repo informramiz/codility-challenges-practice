@@ -137,4 +137,46 @@ object EuclideanAlgorithm {
         //proceeding with step M is = stepNumberOfRevisit / M = lcm(M, N) / M
         return (lcm(M.toLong(), N.toLong()) / M).toInt()
     }
+
+    fun hasCommonPrimeDivisors(a: Int, b: Int): Boolean {
+        if (a == b) {
+            //as both are equal so yes, they have same divisors
+            return true
+        } else if (a == 1 || b == 1) {
+            //as either b or a is 1 and other not so they will never have same prime divisors
+            return false
+        }
+
+        //If b and a have same prime divisors then their GCD will contain all the prime divisors
+        val G = gcd(a, b)
+
+        //G is first divisor of a, let's get the next divisor of a. a/G will next divisor
+        var nextDivisorA = a/G
+        //keep taking g = gcd(nextDivisorA, G) and dividing nextDivisorA with that g (i.e, nextDivisorA /= g)
+        //until we reach nextDivisorA = 1 (means A is good) or we get gcd g = 1 (means A is not good).
+        //Note: G in gcd(nextDivisorA, G) makes sure that next divisor we get also divides G (which means also b)
+        while (nextDivisorA != 1) {
+            val g = gcd(nextDivisorA, G)
+            if (g == 1) {
+                //nextDivisorA and G does not have any common divisor which means a has a prime
+                //divisor that can't divide B
+                return false
+            }
+            //get the next divisor of A
+            nextDivisorA /= g
+        }
+
+        //now repeat the same process B
+        var nextDivisorB = b / G
+        while (nextDivisorB != 1) {
+            val g = gcd(nextDivisorB, G)
+            if (g == 1) {
+                return false
+            }
+
+            nextDivisorB /= g
+        }
+
+        return true
+    }
 }
