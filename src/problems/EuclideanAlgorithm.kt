@@ -138,7 +138,7 @@ object EuclideanAlgorithm {
         return (lcm(M.toLong(), N.toLong()) / M).toInt()
     }
 
-    fun hasCommonPrimeDivisors(a: Int, b: Int): Boolean {
+    private fun haveCommonPrimeDivisors(a: Int, b: Int): Boolean {
         if (a == b) {
             //as both are equal so yes, they have same divisors
             return true
@@ -178,5 +178,16 @@ object EuclideanAlgorithm {
         }
 
         return true
+    }
+
+    fun countNumbersWithCommonPrimeDivisors(A: Array<Int>, B: Array<Int>): Int {
+        var count = 0
+        for (i in 0 until A.size) {
+            if (haveCommonPrimeDivisors(A[i], B[i])) {
+                count++
+            }
+        }
+
+        return count
     }
 }
