@@ -1,13 +1,8 @@
-import problems.SieveOfErotasthenese
+import problems.EuclideanAlgorithm
 
 fun main() {
-    val A = arrayOf(3, 1, 2, 3, 6)
-
-//    //let's test individual methods first to make sure they are right
-//    val count = SieveOfErotasthenese.countNumbers(A)
-//    val divisorsCount = SieveOfErotasthenese.countDivisors(2, count)
-//    println("Divisors Count: ${divisorsCount}")
-
-    val dCounts = SieveOfErotasthenese.countNonDivisors(A)
-    println("Divisors Count: ${dCounts.joinToString()}")
+    val A = arrayOf(15, 10, 3)
+    val B = arrayOf(75, 30, 5)
+    val numbersWithCommonPrimeDivisors = EuclideanAlgorithm.countNumbersWithCommonPrimeDivisors(A, B)
+    println(numbersWithCommonPrimeDivisors)
 }
