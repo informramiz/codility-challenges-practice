@@ -183,6 +183,14 @@ object EuclideanAlgorithm {
         }
 
         //If b and a have same prime divisors then their GCD will contain all the prime divisors
+        //
+        //-------Why GCD must contain all prime divisors?---------
+        //Proof is simple. Let g be the gcd of a and b. So we can express a and b as
+        // a=gc
+        // b=gd.
+        // If d and c had any common prime factor p, then p*g would be the gcd, contradicting our
+        // definition of g as the gcd. Hence the gcd of a,b contains ALL the common factors of a,b.
+        //---------------
         val G = gcd(a, b)
 
         //G is first divisor of a, let's get the next divisor of a. a/G will next divisor
