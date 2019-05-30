@@ -11,4 +11,18 @@ object FibonacciNumbers {
 
         return fib[n]
     }
+
+    fun findNthFibonacciNumberOptimized(n: Int): Int {
+        var secondLastFibonacci = 0
+        var lastFibonacci = 1
+        for (i in 2..n) {
+            val nextFibonacci = lastFibonacci + secondLastFibonacci
+            //now this next nextFibonacci will become last fibonacci for next iteration
+            //and similarly LastFibonacci will become second last
+            secondLastFibonacci = lastFibonacci
+            lastFibonacci = nextFibonacci
+        }
+
+        return lastFibonacci
+    }
 }

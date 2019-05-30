@@ -1,6 +1,6 @@
 import problems.FibonacciNumbers
 
 fun main() {
-    val nthFibonacci = FibonacciNumbers.findNthFibonacciNumber(11)
+    val nthFibonacci = FibonacciNumbers.findNthFibonacciNumberOptimized(11)
     print(nthFibonacci)
 }
