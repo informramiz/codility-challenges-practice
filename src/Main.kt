@@ -6,9 +6,9 @@ fun main() {
 //    val waysCount = FibonacciNumbers.ladder(A, B)
 //    print(waysCount.joinToString())
 
-    val a = 15
+    val a = 21
     val b = 8
     val mod = a and b-1
     //a.shr(2)
-    print(BitwiseOperations.powerOf2(4))
+    print(BitwiseOperations.divideByPowerOf2(a, 2))
 }

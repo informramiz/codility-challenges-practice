@@ -17,4 +17,12 @@ object BitwiseOperations {
         //shift left (<<) multiplies a number by 2. So 1 << power should give the desired result
         return 1L.shl(power)
     }
+
+    /**
+     * Given a, powerOf2, returns a / (2^powerOf2)
+     */
+    fun divideByPowerOf2(a: Int, powerOf2: Int): Int {
+        //shift right (>>) divides a number by 2. So a >> powerOf2 should give us the required result
+        return a.shr(powerOf2)
+    }
 }
