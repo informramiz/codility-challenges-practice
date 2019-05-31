@@ -71,31 +71,38 @@ object FibonacciNumbers {
      * each element of array B is an integer within the range [1..30].
      */
     fun ladder(A: Array<Int>, B: Array<Int>): Array<Int> {
+        //EXPLANATION:
+        // number of compositions of 1s and 2s that sum up to a total n is F(n+1) Fibonacci number
+        //so F(n+1)-th Fibonacci number will give us total possible ways of climbing a ladder of length N
+        //using steps of either 1 or 2
+        //reference: https://en.wikipedia.org/wiki/Fibonacci_number
+        //look at Mathematics section of above link
+
+        val maxA = A.max()!!
+        val maxB = B.max()!!
+        //We need to find Fibonacci numbers up to (maxA+1) to cover all possible lengths
+        //as number of compositions of 1s and 2s that sum up to a total n is F(n+1)
+        //we also need to say inside module (2^maxB) as required in question to avoid data overflow
+        val fibonacciNumbers = findNFibonacciNumbersWithModulo(maxA + 1, BitwiseOperations.powerOf2(maxB))
+
         val count = Array(A.size) {0}
         for (i in 0 until A.size) {
-            //number of compositions of 1s and 2s that sum up to a total n is F(n+1) Fibonacci number
-            //so F(n+1)-th Fibonacci number will give us total possible ways of climbing a ladder of length N
-            //using steps of either 1 or 2
-            //reference: https://en.wikipedia.org/wiki/Fibonacci_number
-            //look at Mathematics section of above link
+            //as number of compositions of 1s and 2s that sum up to a total n is F(n+1)
             //as we only need to return totalWaysOfClimbing % 2^B[i] according to problem statement so
-            count[i] =  findNthFibonacciNumberWithModulo(A[i]+1, BitwiseOperations.powerOf2(B[i]))
+            count[i] =  BitwiseOperations.mod(fibonacciNumbers[A[i]+1], BitwiseOperations.powerOf2(B[i]))
         }
 
         return count
     }
 
-    fun findNthFibonacciNumberWithModulo(n: Int, modulo: Int): Int {
-        var secondLastFibonacci = 0
-        var lastFibonacci = 1
+    fun findNFibonacciNumbersWithModulo(n: Int, modulo: Int): Array<Int> {
+        val fib = Array(n+1) {0}
+        fib[0] = 0
+        fib[1] = 1
         for (i in 2..n) {
-            val nextFibonacci = BitwiseOperations.mod(lastFibonacci + secondLastFibonacci, modulo)
-            //now this next nextFibonacci will become last fibonacci for next iteration
-            //and similarly LastFibonacci will become second last
-            secondLastFibonacci = lastFibonacci
-            lastFibonacci = nextFibonacci
+            fib[i] = BitwiseOperations.mod(fib[i-1] + fib[i-2], modulo)
         }
 
-        return lastFibonacci
+        return fib
     }
 }
