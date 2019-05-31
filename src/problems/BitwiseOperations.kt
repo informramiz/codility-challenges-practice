@@ -9,4 +9,9 @@ object BitwiseOperations {
         //so we are only interested in bits of (b-1) as those bits will represent mod value
         return a and (b-1)
     }
+
+    fun powerOf2(power: Int): Long {
+        //shift left (<<) multiplies a number by 2. So 1 << power should give the desired result
+        return 1L.shl(power)
+    }
 }

@@ -10,5 +10,5 @@ fun main() {
     val b = 8
     val mod = a and b-1
     //a.shr(2)
-    print(BitwiseOperations.mod(a, b))
+    print(BitwiseOperations.powerOf2(4))
 }
