@@ -15,9 +15,9 @@ object FibonacciNumbers {
         return fib[n]
     }
 
-    fun findNthFibonacciNumberOptimized(n: Int): Int {
-        var secondLastFibonacci = 0
-        var lastFibonacci = 1
+    fun findNthFibonacciNumberOptimized(n: Int): Long {
+        var secondLastFibonacci = 0L
+        var lastFibonacci = 1L
         for (i in 2..n) {
             val nextFibonacci = lastFibonacci + secondLastFibonacci
             //now this next nextFibonacci will become last fibonacci for next iteration
@@ -76,11 +76,26 @@ object FibonacciNumbers {
             //number of compositions of 1s and 2s that sum up to a total n is F(n+1) Fibonacci number
             //so F(n+1)-th Fibonacci number will give us total possible ways of climbing a ladder of length N
             //using steps of either 1 or 2
-            val totalWaysOfClimbing = findNthFibonacciNumberOptimized(A[i] + 1)
-            //as we only need to return L % 2^B[i] according to problem statement so
-            count[i] =  totalWaysOfClimbing % (Math.pow(2.toDouble(), B[i].toDouble()).toInt())
+            //reference: https://en.wikipedia.org/wiki/Fibonacci_number
+            //look at Mathematics section of above link
+            //as we only need to return totalWaysOfClimbing % 2^B[i] according to problem statement so
+            count[i] =  findNthFibonacciNumberWithModulo(A[i]+1, BitwiseOperations.powerOf2(B[i]))
         }
 
         return count
+    }
+
+    fun findNthFibonacciNumberWithModulo(n: Int, modulo: Int): Int {
+        var secondLastFibonacci = 0
+        var lastFibonacci = 1
+        for (i in 2..n) {
+            val nextFibonacci = BitwiseOperations.mod(lastFibonacci + secondLastFibonacci, modulo)
+            //now this next nextFibonacci will become last fibonacci for next iteration
+            //and similarly LastFibonacci will become second last
+            secondLastFibonacci = lastFibonacci
+            lastFibonacci = nextFibonacci
+        }
+
+        return lastFibonacci
     }
 }
