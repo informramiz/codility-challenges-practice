@@ -1,5 +1,7 @@
 package problems
 
+import java.util.*
+
 /**
  * https://codility.com/media/train/11-Fibonacci.pdf
  */
@@ -110,31 +112,39 @@ object FibonacciNumbers {
     }
 
     fun countMinJumps(A: Array<Int>): Int {
+        //get all the Fibonacci numbers until the last Fibonacci number exceeds A.size
         val fib = getFibonacciNumbersBelowExcept0(A.size).reversed()
 
-        var jumpsCount = 0
-        var i = -1
-        while (i < A.size) {
-            var didJump = false
+        //as we need to find minimum jumps possible and there can be multiple points which can
+        //lead to the end so we have to go through all those points. We will keep all those points
+        //in queue and use a breadth first search algorithm to pick (BFS). The point the reaches to
+        //the end first will be the one with minimum jumps
+        val queue = LinkedList<Point>()
+        //as initially the frog is at position -1 and jumpsCount 0 so
+        queue.add(Point(-1, 0))
 
+        while (!queue.isEmpty()) {
+            //get the next candidate point
+            val point = queue.remove()
+
+            //for each fibonacci number with value with which a jump is possible, add them to queue
             for (f in fib) {
-                val nextPosition = i + f
+                val nextPosition = point.position + f
 
                 if (nextPosition == A.size) {
-                    //we reached the other bank
-                    return jumpsCount + 1
+                    //we reached the other bank so just return total jump count
+                    return point.jumpCount + 1
                 } else if (nextPosition >= 0 && nextPosition < A.size && A[nextPosition] == 1) {
-                    //we can jump from position i to i+f using current fibonacci length f
-                    i = nextPosition
-                    jumpsCount++
-                    didJump = true
-                    break
+                    //we can jump from position i to nextPosition using current fibonacci length f
+                    queue.add(Point(nextPosition, point.jumpCount + 1))
+                    //because we have discovered point A[nextPosition] so we mark it as discovered by assigning 0
+                    //Why? Any point that is going to discover/lead to A[nextPosition] after it is already
+                    //discovered is obviously taking longer path
+                    // i.e: because we are using breadth first search
+                    //and A[nextPosition] appeared first in breadth and any point that later discovers A[nextPosition]
+                    //is in bottom breadth so that path is definitely not shorter.
+                    A[nextPosition] = 0
                 }
-            }
-
-            //check if a jump was made or not. If not then that means we can't jump from here onward
-            if (!didJump) {
-                return -1
             }
         }
 
@@ -155,4 +165,6 @@ object FibonacciNumbers {
 
         return fib
     }
+
+    private data class Point(val position: Int, val jumpCount: Int)
 }
