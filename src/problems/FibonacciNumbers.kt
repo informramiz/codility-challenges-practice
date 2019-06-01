@@ -95,12 +95,62 @@ object FibonacciNumbers {
         return count
     }
 
+    /**
+     * Returns first n Fibonacci numbers while making sure their value never exceeds module
+     */
     fun findNFibonacciNumbersWithModulo(n: Int, modulo: Int): Array<Int> {
         val fib = Array(n+1) {0}
         fib[0] = 0
         fib[1] = 1
         for (i in 2..n) {
             fib[i] = BitwiseOperations.mod(fib[i-1] + fib[i-2], modulo)
+        }
+
+        return fib
+    }
+
+    fun countMinJumps(A: Array<Int>): Int {
+        val fib = getFibonacciNumbersBelowExcept0(A.size).reversed()
+
+        var jumpsCount = 0
+        var i = -1
+        while (i < A.size) {
+            var didJump = false
+
+            for (f in fib) {
+                val nextPosition = i + f
+
+                if (nextPosition == A.size) {
+                    //we reached the other bank
+                    return jumpsCount + 1
+                } else if (nextPosition >= 0 && nextPosition < A.size && A[nextPosition] == 1) {
+                    //we can jump from position i to i+f using current fibonacci length f
+                    i = nextPosition
+                    jumpsCount++
+                    didJump = true
+                    break
+                }
+            }
+
+            //check if a jump was made or not. If not then that means we can't jump from here onward
+            if (!didJump) {
+                return -1
+            }
+        }
+
+        return -1
+    }
+
+    /**
+     * Returns Fibonacci numbers until their value exceeds n
+     */
+    private fun getFibonacciNumbersBelowExcept0(n: Int): List<Int> {
+        val fib = mutableListOf<Int>()
+        fib.add(1)
+        fib.add(2)
+
+        while (fib.last() <= n) {
+            fib.add(fib[fib.lastIndex] + fib[fib.lastIndex-1])
         }
 
         return fib

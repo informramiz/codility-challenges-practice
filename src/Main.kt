@@ -1,5 +1,7 @@
-import problems.BitwiseOperations
+import problems.FibonacciNumbers
 
 fun main() {
-    println(BitwiseOperations.isOdd(5))
+    val A = arrayOf(1, 1, 0, 0, 0)
+    val jumps = FibonacciNumbers.countMinJumps(A)
+    print(jumps)
 }
