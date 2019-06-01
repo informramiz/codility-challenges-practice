@@ -25,4 +25,12 @@ object BitwiseOperations {
         //shift right (>>) divides a number by 2. So a >> powerOf2 should give us the required result
         return a.shr(powerOf2)
     }
+
+    fun isEven(n: Int): Boolean {
+        return n and 1 == 0
+    }
+
+    fun isOdd(n: Int): Boolean {
+        return !isEven(n)
+    }
 }
