@@ -1,8 +1,8 @@
-import problems.EuclideanAlgorithm
+import problems.FibonacciNumbers
 
 fun main() {
-    val A = arrayOf(15, 10, 3)
-    val B = arrayOf(75, 30, 5)
-    val numbersWithCommonPrimeDivisors = EuclideanAlgorithm.countNumbersWithCommonPrimeDivisors(A, B)
-    println(numbersWithCommonPrimeDivisors)
+//    val A = arrayOf(0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0)
+    val A = arrayOf(1, 1, 0, 0, 0)
+    val jumps = FibonacciNumbers.countMinJumps(A)
+    print(jumps)
 }
