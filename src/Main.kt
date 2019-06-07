@@ -1,8 +1,7 @@
-import problems.FibonacciNumbers
+import problems.BinarySearch
 
 fun main() {
-//    val A = arrayOf(0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0)
-    val A = arrayOf(1, 1, 0, 0, 0)
-    val jumps = FibonacciNumbers.countMinJumps(A)
-    print(jumps)
+    val A = arrayOf(1, 2, 3, 4)
+    val index = BinarySearch.findNumber(A, 3)
+    print(index)
 }
