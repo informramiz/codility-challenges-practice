@@ -23,4 +23,25 @@ object BinarySearch {
         //we did not find a match for the key
         return -1
     }
+
+    /**
+     * Given number key, returns the maximum number n that is less than or equal to key (i.e, n <= key)
+     */
+    fun findMaxNumberEqualOrLessThanKey(A: Array<Int>, key: Int): Int {
+        var start = 0
+        var end = A.lastIndex
+        var result = -1
+        while (start <= end) {
+            val mid = (start + end) / 2
+            if (A[mid] <= key) {
+                result = mid
+                start = mid + 1
+            } else { //A[mid] > key, we are interested in range [start, mid)
+                end = mid - 1
+            }
+        }
+
+        //we did not find a match for the key
+        return result
+    }
 }
