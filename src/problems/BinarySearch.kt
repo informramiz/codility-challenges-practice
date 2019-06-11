@@ -1,5 +1,7 @@
 package problems
 
+import kotlin.math.min
+
 /**
  * https://codility.com/media/train/12-BinarySearch.pdf
  */
@@ -92,5 +94,118 @@ object BinarySearch {
         }
 
         return boardsCount
+    }
+
+    /**
+     * https://app.codility.com/programmers/lessons/14-binary_search_algorithm/min_max_division/
+     * -------MinMaxDivision---------
+     * Divide array A into K blocks and minimize the largest sum of any block.
+     * ---------------
+     * You are given integers K, M and a non-empty array A consisting of N integers. Every element of the array is not greater than M.
+     * You should divide this array into K blocks of consecutive elements. The size of the block is any integer between 0 and N. Every element of the array should belong to some block.
+     * The sum of the block from X to Y equals A[X] + A[X + 1] + ... + A[Y]. The sum of empty block equals 0.
+     * The large sum is the maximal sum of any block.
+     *
+     * For example, you are given integers K = 3, M = 5 and array A such that:
+     * A[0] = 2
+     * A[1] = 1
+     * A[2] = 5
+     * A[3] = 1
+     * A[4] = 2
+     * A[5] = 2
+     * A[6] = 2
+     *
+     * The array can be divided, for example, into the following blocks:
+     *
+     * [2, 1, 5, 1, 2, 2, 2], [], [] with a large sum of 15;
+     * [2], [1, 5, 1, 2], [2, 2] with a large sum of 9;
+     * [2, 1, 5], [], [1, 2, 2, 2] with a large sum of 8;
+     * [2, 1], [5, 1], [2, 2, 2] with a large sum of 6.
+     *
+     * The goal is to minimize the large sum. In the above example, 6 is the minimal large sum.
+     *
+     * Write a function:
+     * class Solution { public int solution(int K, int M, int[] A); }
+     *
+     * that, given integers K, M and a non-empty array A consisting of N integers, returns the minimal large sum.
+     * For example, given K = 3, M = 5 and array A such that:
+     *
+     * A[0] = 2
+     * A[1] = 1
+     * A[2] = 5
+     * A[3] = 1
+     * A[4] = 2
+     * A[5] = 2
+     * A[6] = 2
+     *
+     * the function should return 6, as explained above.
+     *
+     * Write an efficient algorithm for the following assumptions:
+     * N and K are integers within the range [1..100,000];
+     * M is an integer within the range [0..10,000];
+     * each element of array A is an integer within the range [0..M].
+     */
+    fun findMinBlockSum(K: Int, M: Int, A: Array<Int>): Int {
+        //the min sum is 1 element sum and that is when K >= A.length. In this max(A) is
+        // actually the minimum block sum
+        var minSum = A.max()!!
+        //the max sum is when K = 1, in this case whole array A sum (sum(A)) is the minimum possible sum
+        var maxSum = A.sum()
+
+        //handle boundary cases
+        if (K == 1) {
+            return maxSum
+        } else if (K >= A.size) {
+            return minSum
+        }
+
+        //now we can find the min possible block sum by using binary search as binary search
+        //can be applied to a given search space if that search space in sorted and in this case the sorted
+        //search space is [minSum, maxSum] so binary search is applicable
+        var result = 0
+        while (minSum <= maxSum) {
+            val midSum = (minSum + maxSum) / 2
+            //count the blocks that we can achieve with midSum as maxSum
+            val blocksCount = countBlocks(A, midSum)
+            if (blocksCount <= K) {
+                //Case blocksCount < K:
+                //this means that we are putting too many elements into a block and elements/block can
+                //be decreased which means that we achieve smaller sum than midSum. So we check
+                //in range [minSum, midSum-1]
+                //
+                //Case blocksCount == K:
+                //even though the number blocks are fine with midSum but we still want to check if we can
+                //achieve a sum lower than midSum so we search in range [minSum, midSum-1]
+                maxSum = midSum-1
+                //keep track of last midSum (will come in handy for case blocksCount == K)
+                result = midSum
+            } else {
+                //as blocksCount > K, this means that we are putting too few elements in a block. We need
+                //to increase elements/block to decrease the blocks count. This will result in increased
+                //blockSum so the right sum will be in range [midSum+1, maxSum]
+                minSum = midSum + 1
+            }
+        }
+
+        return result
+    }
+
+    private fun countBlocks(A: Array<Int>, maxBlockSum: Int): Int {
+        //as A is always non-empty so we will always have 1 block
+        var blockCount = 1
+        var blockSum = 0
+        for (a in A) {
+            //check if a can fit in current block while keep blockSum within maxBlockSum
+            if (blockSum + a <= maxBlockSum) {
+                blockSum += a
+            } else {
+                //as a can't fit within current block so start a new block and reset the blockSum starting
+                //with initial value a
+                blockSum = a
+                blockCount++
+            }
+        }
+
+        return blockCount
     }
 }
