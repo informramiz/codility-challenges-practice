@@ -1,7 +1,5 @@
 package problems
 
-import kotlin.math.min
-
 /**
  * https://codility.com/media/train/12-BinarySearch.pdf
  */
@@ -209,8 +207,19 @@ object BinarySearch {
         return blockCount
     }
 
-    fun nailPlank(plankStart: Int, plankEnd: Int, nails: Array<Int>, maximumNailsAllowed: Int): Boolean {
-        for (i in 0 until maximumNailsAllowed) {
+    fun canNailAllPlanks(plankStarts: Array<Int>, plankEnds: Array<Int>,
+                         nails: Array<Int>, maximumAllowedNails: Int): Boolean {
+        for (i in 0 until plankStarts.size) {
+            if (!nailPlank(plankStarts[i], plankEnds[i], nails, maximumAllowedNails)) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    private fun nailPlank(plankStart: Int, plankEnd: Int, nails: Array<Int>, maximumAllowedNails: Int): Boolean {
+        for (i in 0 until maximumAllowedNails) {
             if (nails[i] !in plankStart..plankEnd) {
                 return false
             }
