@@ -208,4 +208,14 @@ object BinarySearch {
 
         return blockCount
     }
+
+    fun nailPlank(plankStart: Int, plankEnd: Int, nails: Array<Int>, maximumNailsAllowed: Int): Boolean {
+        for (i in 0 until maximumNailsAllowed) {
+            if (nails[i] !in plankStart..plankEnd) {
+                return false
+            }
+        }
+
+        return true
+    }
 }
