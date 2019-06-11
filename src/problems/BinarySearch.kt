@@ -220,11 +220,11 @@ object BinarySearch {
 
     private fun nailPlank(plankStart: Int, plankEnd: Int, nails: Array<Int>, maximumAllowedNails: Int): Boolean {
         for (i in 0 until maximumAllowedNails) {
-            if (nails[i] !in plankStart..plankEnd) {
-                return false
+            if (nails[i] in plankStart..plankEnd) {
+                return true
             }
         }
 
-        return true
+        return false
     }
 }
