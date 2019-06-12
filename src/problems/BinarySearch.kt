@@ -253,14 +253,19 @@ object BinarySearch {
      * A[K] ≤ B[K].
      *
      */
-    fun findMinNailsToPlank(A: Array<Int>, B: Array<Int>, C: Array<Int>): Int {
+    fun findMinNailsToPlank(A: IntArray, B: IntArray, C: IntArray): Int {
+        //find max value of any of (A, B, C) arrays. We will later use it for prefixSums size
+        var maxValue = A.max()!!
+        maxValue = Math.max(maxValue, B.max()!!)
+        maxValue = Math.max(maxValue, C.max()!!)
+
         var minNails = 1
         var maxNails = C.size
         //find the right number of nails using binary search
         var minNailsCount = -1
         while (minNails <= maxNails) {
             val mid = (minNails + maxNails) / 2
-            if (canNailAllPlanks(A, B, C, mid)) {
+            if (canNailAllPlanks(A, B, C, mid, maxValue)) {
                 //let's check if we can still nail if we decrease the number of nails
                 //search space: [minNails, mid-1]
                 maxNails = mid - 1
@@ -276,24 +281,36 @@ object BinarySearch {
         return minNailsCount
     }
 
-    private fun canNailAllPlanks(plankStarts: Array<Int>, plankEnds: Array<Int>,
-                         nails: Array<Int>, maximumAllowedNails: Int): Boolean {
+    /**
+     * Help take from link: http://codility-lessons.blogspot.com/2015/03/lesson-11-nailingplanks-nailing-planks.html
+     */
+    private fun canNailAllPlanks(plankStarts: IntArray, plankEnds: IntArray,
+                                 nails: IntArray, maximumAllowedNails: Int,
+                                 maxValue: Int): Boolean {
+        val prefixSums = Array(maxValue + 1) {0}
+        //mark the value where there is a nail
+        for (i in 0 until maximumAllowedNails) {
+            prefixSums[nails[i]]++
+        }
+
+        //now convert marked values to proper prefix sum
+        for (i in 2..maxValue) {
+            prefixSums[i] += prefixSums[i-1]
+        }
+
+        val canNailPlank = { a: Int, b: Int ->
+            prefixSums[b] > prefixSums[a-1]
+        }
+
+        //now check for each plan (ai, bi) if there exists a nail between these numbers
+        //if there is no nail in range (ai, bi) then prefix sum in range [ai, bi] will be
+        // same as in range [some value .. ai-1] (i.e, prefixSums[bi] == prefixSums[ai-1])
         for (i in 0 until plankStarts.size) {
-            if (!nailPlank(plankStarts[i], plankEnds[i], nails, maximumAllowedNails)) {
+            if (!canNailPlank(plankStarts[i], plankEnds[i])) {
                 return false
             }
         }
 
         return true
-    }
-
-    private fun nailPlank(plankStart: Int, plankEnd: Int, nails: Array<Int>, maximumAllowedNails: Int): Boolean {
-        for (i in 0 until maximumAllowedNails) {
-            if (nails[i] in plankStart..plankEnd) {
-                return true
-            }
-        }
-
-        return false
     }
 }
