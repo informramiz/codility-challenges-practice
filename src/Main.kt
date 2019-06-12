@@ -1,8 +1,9 @@
-import problems.FibonacciNumbers
+import problems.BinarySearch
 
 fun main() {
-//    val A = arrayOf(0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0)
-    val A = arrayOf(1, 1, 0, 0, 0)
-    val jumps = FibonacciNumbers.countMinJumps(A)
-    print(jumps)
+    val A = intArrayOf(1, 4, 5, 8)
+    val B = intArrayOf(4, 5, 9, 10)
+    val C = intArrayOf(4, 6, 7, 10, 2)
+    val nailsCount = BinarySearch.findMinNailsToPlank(A, B, C)
+    print(nailsCount)
 }
