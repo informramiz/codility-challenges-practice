@@ -1,4 +1,3 @@
-import problems.BinarySearch
 import problems.CaterPillarMethod
 
 fun main() {
