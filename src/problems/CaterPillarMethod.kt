@@ -253,12 +253,17 @@ object CaterPillarMethod {
                 startValue == endValue -> {
                     //both start and end values are equal, duplicate encountered. We have considered 1 value above
                     //into our count and in case of duplicates only 1 value should be considered as we are counting
-                    //distinct values. In this case move both start and end till start and end are not duplicate
-                    //skip left and right duplicates (in case of a positive and negative duplicates)
+                    //distinct values.
+
+                    //now that current startValue (which is also endValue as both are equal in this case)
+                    //is discovered/counted, now remove duplicates on both start and end sides of the array
+
+                    //discard start side duplicates
                     while (start <= end && Math.abs(A[start].toLong()) == endValue) {
                         start++
                     }
 
+                    //discard end side duplicates
                     while (end >= start && Math.abs(A[end].toLong()) == endValue) {
                         end--
                     }
