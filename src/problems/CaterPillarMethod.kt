@@ -243,19 +243,17 @@ object CaterPillarMethod {
             count++
 
             //we are only interested in absolute values
-            var startValue = Math.abs(A[start].toLong())
-            var endValue = Math.abs(A[end].toLong())
+            val startValue = Math.abs(A[start].toLong())
+            val endValue = Math.abs(A[end].toLong())
 
             when {
                 startValue == endValue -> {
                     //both start and end values are equal, duplicate encountered. We have considered 1 value above
                     //into our count and in case of duplicates only 1 value should be considered as we are counting
                     //distinct values. In this case move both start and end till start and end are not duplicate
-                    while (start <= end && startValue == endValue) {
+                    while (start <= end && Math.abs(A[start].toLong()) == Math.abs(A[end].toLong())) {
                         start++
                         end--
-                        startValue = Math.abs(A[start].toLong())
-                        endValue = Math.abs(A[end].toLong())
                     }
                 }
                 //start value > end value so move start by 1 element
