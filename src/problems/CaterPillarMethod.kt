@@ -233,6 +233,9 @@ object CaterPillarMethod {
      *
      */
     fun absDistinct(A: IntArray): Int {
+        //NOTE: Any easy solution would be to sort the array by absolute values and the duplicates will
+        //become adjacent values so can be easily discarded in one go or we can pass the array to Set class
+        //to get distinct values but I want to solve it using CaterPillar method
         var count = 0
         var start = 0
         var end = A.lastIndex
@@ -251,17 +254,28 @@ object CaterPillarMethod {
                     //both start and end values are equal, duplicate encountered. We have considered 1 value above
                     //into our count and in case of duplicates only 1 value should be considered as we are counting
                     //distinct values. In this case move both start and end till start and end are not duplicate
-                    while (start <= end && Math.abs(A[start].toLong()) == Math.abs(A[end].toLong())) {
+                    start++
+                    end--
+
+                    //skip left and right duplicates (in case of a positive and negative duplicates)
+                    while (start <= end && Math.abs(A[start].toLong()) == endValue) {
                         start++
                         end--
                     }
                 }
                 //start value > end value so move start by 1 element
                 startValue > endValue -> {
-                    start++
+                    //skip start side duplicates
+                    while (start <= end && startValue == Math.abs(A[start].toLong())) {
+                        start++
+                    }
                 }
                 else -> { // endValue > startValue, move end by 1 element
                     end--
+                    //skip start side duplicates
+                    while (end >= start && endValue == Math.abs(A[end].toLong())) {
+                        end--
+                    }
                 }
             }
         }
