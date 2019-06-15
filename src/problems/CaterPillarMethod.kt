@@ -110,18 +110,18 @@ object CaterPillarMethod {
      * each element of array A is an integer within the range [0..M].
      */
     fun countDistinctSlices(A: IntArray, M: Int): Int {
-        val MAX_DISTINCT_SLICES = 1_000_000_000
-        //array to keep count of encountered numbers. We will use it to check if we already encountered
+        val maxDistinctSlices = 1_000_000_000
+        //array to keep check of encountered numbers. We will use it to check if we already encountered
         //a number previously in the given slice or not
-        val numbersCount = Array(M + 1) { 0 }
+        val isDiscovered = Array(M + 1) { false }
         var distinctSlicesCount = A.size //each number in A is also a distinct slice of size = 1 as per 0 ≤ P ≤ Q < N
 
         var front = 0
         for (back in 0 until A.size) {
-            //we keep going for all numbers that are unique/not discovered (count == 0) for given slice
-            while (front < A.size && numbersCount[A[front]] == 0) {
+            //we keep going for all numbers that are not discovered in this slice (back, front)
+            while (front < A.size && !isDiscovered[A[front]]) {
                 //count this front as we have explored it
-                numbersCount[A[front]]++
+                isDiscovered[A[front]] = true
                 front++
             }
 
@@ -130,12 +130,12 @@ object CaterPillarMethod {
             distinctSlicesCount += front - back - 1
 
             //we only need to count slices till MAX_DISTINCT_SLICES
-            if (distinctSlicesCount >= MAX_DISTINCT_SLICES) {
-                return MAX_DISTINCT_SLICES
+            if (distinctSlicesCount >= maxDistinctSlices) {
+                return maxDistinctSlices
             }
 
-            //as now we are no longer going to consider the current back so remove its count
-            numbersCount[A[back]]--
+            //as now we are no longer going to consider the current back so we mark it as not discovered
+            isDiscovered[A[back]] = false
         }
 
         return distinctSlicesCount
