@@ -1,7 +1,7 @@
 import problems.CaterPillarMethod
 
 fun main() {
-    val A = intArrayOf(6, 2, 7, 4, 1, 3, 6)
-    val doesSubsequenceExist = CaterPillarMethod.isThereASequenceOfSum(A, 12)
-    print(doesSubsequenceExist)
+    val A = intArrayOf(3, 4, 5, 5, 2)
+    val distinctSlicesCount = CaterPillarMethod.countDistinctSlices(A, 5)
+    print(distinctSlicesCount)
 }

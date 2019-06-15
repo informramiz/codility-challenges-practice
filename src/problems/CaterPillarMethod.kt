@@ -77,4 +77,67 @@ object CaterPillarMethod {
 
         return trianglesCount
     }
+
+    /**
+     * https://app.codility.com/programmers/lessons/15-caterpillar_method/count_distinct_slices/
+     * CountDistinctSlices
+     * Count the number of distinct slices (containing only unique numbers).
+     * Programming language:
+     * An integer M and a non-empty array A consisting of N non-negative integers are given. All integers in array A are less than or equal to M.
+     * A pair of integers (P, Q), such that 0 ≤ P ≤ Q < N, is called a slice of array A. The slice consists of the elements A[P], A[P + 1], ..., A[Q]. A distinct slice is a slice consisting of only unique numbers. That is, no individual number occurs more than once in the slice.
+     * For example, consider integer M = 6 and array A such that:
+     * A[0] = 3
+     * A[1] = 4
+     * A[2] = 5
+     * A[3] = 5
+     * A[4] = 2
+     * There are exactly nine distinct slices: (0, 0), (0, 1), (0, 2), (1, 1), (1, 2), (2, 2), (3, 3), (3, 4) and (4, 4).
+     * The goal is to calculate the number of distinct slices.
+     * Write a function:
+     * class Solution { public int solution(int M, int[] A); }
+     * that, given an integer M and a non-empty array A consisting of N integers, returns the number of distinct slices.
+     * If the number of distinct slices is greater than 1,000,000,000, the function should return 1,000,000,000.
+     * For example, given integer M = 6 and array A such that:
+     * A[0] = 3
+     * A[1] = 4
+     * A[2] = 5
+     * A[3] = 5
+     * A[4] = 2
+     * the function should return 9, as explained above.
+     * Write an efficient algorithm for the following assumptions:
+     * N is an integer within the range [1..100,000];
+     * M is an integer within the range [0..100,000];
+     * each element of array A is an integer within the range [0..M].
+     */
+    fun countDistinctSlices(A: IntArray, M: Int): Int {
+        val MAX_DISTINCT_SLICES = 1_000_000_000
+        //array to keep count of encountered numbers. We will use it to check if we already encountered
+        //a number previously in the given slice or not
+        val numbersCount = Array(M + 1) { 0 }
+        var distinctSlicesCount = A.size //each number in A is also a distinct slice of size = 1 as per 0 ≤ P ≤ Q < N
+
+        var front = 0
+        for (back in 0 until A.size) {
+            //we keep going for all numbers that are unique/not discovered (count == 0) for given slice
+            while (front < A.size && numbersCount[A[front]] == 0) {
+                //count this front as we have explored it
+                numbersCount[A[front]]++
+                front++
+            }
+
+            //all numbers till front-1 can make a slice with given back so
+            //NOTE: -1 because last front is what broke the loop so is not valid for given slice
+            distinctSlicesCount += front - back - 1
+
+            //we only need to count slices till MAX_DISTINCT_SLICES
+            if (distinctSlicesCount >= MAX_DISTINCT_SLICES) {
+                return MAX_DISTINCT_SLICES
+            }
+
+            //as now we are no longer going to consider the current back so remove its count
+            numbersCount[A[back]]--
+        }
+
+        return distinctSlicesCount
+    }
 }
