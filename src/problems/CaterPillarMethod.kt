@@ -52,7 +52,7 @@ object CaterPillarMethod {
      * all triangles for given (x, y) using formula (largestZ - y) because each z after y can make up a triangle with
      * given (x, y). We repeat the same process for remaining (x, y)
      */
-    fun countTriangles(A: IntArray): Int {
+    fun countTrianglesOfSticks(A: IntArray): Int {
         var trianglesCount = 0
         //for every x
         for (x in 0 until A.size) {
