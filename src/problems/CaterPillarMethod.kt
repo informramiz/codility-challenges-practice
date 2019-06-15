@@ -243,8 +243,8 @@ object CaterPillarMethod {
             count++
 
             //we are only interested in absolute values
-            val startValue = Math.abs(A[start])
-            val endValue = Math.abs(A[end])
+            val startValue = Math.abs(A[start].toLong())
+            val endValue = Math.abs(A[end].toLong())
 
             when {
                 //both start and end values are equal, duplicate encountered. We have considered 1 value above
