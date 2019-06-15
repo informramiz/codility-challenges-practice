@@ -1,7 +1,7 @@
 import problems.CaterPillarMethod
 
 fun main() {
-    val A = intArrayOf(3, 4, 5, 5, 2)
-    val distinctSlicesCount = CaterPillarMethod.countDistinctSlices(A, 5)
-    print(distinctSlicesCount)
+    val A = intArrayOf(10, 2, 5, 1, 8, 12)
+    val trianglesCount = CaterPillarMethod.countTrianglesOfEdges(A)
+    print(trianglesCount)
 }
