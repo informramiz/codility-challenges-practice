@@ -276,7 +276,6 @@ object CaterPillarMethod {
                     }
                 }
                 else -> { // endValue > startValue, move end by 1 element
-                    end--
                     //skip start side duplicates
                     while (end >= start && endValue == Math.abs(A[end].toLong())) {
                         end--
