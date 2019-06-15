@@ -247,10 +247,10 @@ object CaterPillarMethod {
             var endValue = Math.abs(A[end].toLong())
 
             when {
-                //both start and end values are equal, duplicate encountered. We have considered 1 value above
-                //into our count and in case of duplicates only 1 value should be considered as we are couting
-                //distinct values. In this case move both start and end (i.e, move by 2 elements as 1 is duplicate)
                 startValue == endValue -> {
+                    //both start and end values are equal, duplicate encountered. We have considered 1 value above
+                    //into our count and in case of duplicates only 1 value should be considered as we are counting
+                    //distinct values. In this case move both start and end till start and end are not duplicate
                     while (start <= end && startValue == endValue) {
                         start++
                         end--
