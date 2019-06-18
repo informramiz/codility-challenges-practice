@@ -20,4 +20,21 @@ class CaterPillarTests {
         //arithmetic overflow
         assertEquals(3, CaterPillarMethod.absDistinct(intArrayOf(-2147483648, 0, 2147483647)))
     }
+
+    @Test
+    fun testMinAbsSumOfTwo() {
+        val test = {A: IntArray, expectedSum: Int ->
+            assertEquals(expectedSum, CaterPillarMethod.minAbsSumOfTwo(A))
+        }
+
+        test(intArrayOf(1, -3, 4), 1)
+        //extreme ends
+        test(intArrayOf(-1_000_000_000, 1_000_000_000), 0)
+        //mix of positive and negative
+        test(intArrayOf(-5, -4, 1, 2, 3, 7), 1)
+        //all negatives
+        test(intArrayOf(-5, -4, -3, -2, -1), 2)
+        //all positives
+        test(intArrayOf(2, 3, 4, 5, 7), 4)
+    }
 }
