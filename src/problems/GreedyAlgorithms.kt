@@ -49,4 +49,22 @@ object GreedyAlgorithms {
 
         return canoesCount
     }
+
+    fun tieRopes(A: IntArray, K: Int): Int {
+        var maxCount = 0
+        var runningCount = 0
+        var runningLength = 0L
+        for (length in A) {
+            runningLength += length
+            runningCount++
+
+            if (runningLength >= K) {
+                maxCount = Math.max(maxCount, runningCount)
+                runningLength = 0
+                runningCount = 0
+            }
+        }
+
+        return maxCount
+    }
 }
