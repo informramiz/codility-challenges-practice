@@ -16,8 +16,8 @@ class GreedyAlgorithmsTests {
 
         //normal test
         test(intArrayOf(1, 2, 3, 4, 1, 1, 3), 4, 3)
-        test(intArrayOf(1, 2, 3, 1, 1, 1, 3), 4, 4)
+        test(intArrayOf(1, 2), 2, 1)
         //check for arithmetic overflow
-        test(intArrayOf(1_000_000_000, 1_000_000_000), 1_000_000_001, 2)
+        test(intArrayOf(1_000_000_000, 1_000_000_000), 1_000_000_001, 1)
     }
 }
