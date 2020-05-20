@@ -341,7 +341,17 @@ object CaterPillarMethod {
      *  and try to converge on the smallest possible absolute number (case-2). This way we will be able to cover both of the cases
      *  mentioned above
      */
+
+    data class MyName(var name: String, var name2: String) {}
+
+    fun printStudents(vararg students: MyName) {
+        for (s in students) println(s)
+    }
+
     fun minAbsSumOfTwo(A: IntArray): Int {
+        val m = MyName("", "")
+        printStudents(m)
+        
         //pick sum of first number with itself just to initialize the sum with some valid value
         var minSum = Math.abs(A[0] + A[0])
         //sort the array so that negative and positive numbers are on opposite ends.
