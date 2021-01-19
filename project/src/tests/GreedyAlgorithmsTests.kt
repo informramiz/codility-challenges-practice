@@ -1,5 +1,5 @@
-//package tests
-//
+package tests
+
 //import org.junit.Test
 //import problems.GreedyAlgorithms
 //import kotlin.test.assertEquals
